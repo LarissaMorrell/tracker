@@ -1,0 +1,15 @@
+{
+  "name": "mrkt-tracker",
+  "version": "1.0.0",
+  "description": "This app aids users in keeping track of store personnel, paperwork collection, and other data",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.14.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Larissa Morrell",
+  "license": "ISC"
+}

@@ -33,10 +33,10 @@ describe('create account page', function() {
   });
 });
 
-describe('user home page', function() {
+describe('user landing page', function() {
   it('exists', function(done) {
     chai.request(app)
-      .get('/home.html')
+      .get('/user-landing.html')
       .end(function(err, res) {
         res.should.have.status(200);
         res.should.be.html;

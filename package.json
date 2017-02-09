@@ -4,7 +4,8 @@
   "description": "This app aids users in keeping track of store personnel, paperwork collection, and other data",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.14.1"
+    "express": "^4.14.1",
+    "mongoose": "^4.8.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",

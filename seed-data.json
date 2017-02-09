@@ -1,66 +1,106 @@
 {
-	"users": [
-        {
-            "firstName": "John",
-            "lastName": "Smith",
-            "email": "something@nowhere.com",
-            "address": "1 Home St.",
-            "city": "Boston",
-            "state": "MA",
-            "zip": "12345",
-            "phone": "555-555-5555",
-            "position": "Retail Sales Specialist",
-            "password": "password",
-            "stores": [
-                {
-                    "name": "A Store Name",
-                    "id": "1234567890",
-                    "address": "1 Market St.",
-                    "city": "Beantown",
-                    "state": "MA",
-                    "generalComments": "store wants paperwork back",
-                    "person": [
-                        {
-                            "name": "Jill White",
-                            "position": "manager",
-                            "comment": "has a son named brian."
-                        },
-                        {
-                            "name": "Chaz Bono",
-                            "position": "accountant",
-                            "comment": "only works 10-2pm"
-                        }
-                    ],
-                    "tier": "gold",
-                    "havePaperwork": true,
-                    "wantPaperworkBack": true,
-                    "lastRedeemed": "12/12/16" 
-                },
-                {
-                    "name": "A Deli Name",
-                    "id": "2234567890",
-                    "address": "1 Two Ln.",
-                    "city": "Beanville",
-                    "state": "MA",
-                    "generalComments": "store hates people",
-                    "person": [
-                        {
-                            "name": "George Burns",
-                            "position": "store manager",
-                            "comment": "stupid rich bastard."
-                        },
-                        {
-                            "name": "Homer Simpson",
-                            "position": "deli manager",
-                            "comment": "has very little hair"
-                        }
-                    ],
-                    "tier": "silver",
-                    "havePaperwork": false,
-                    "wantPaperworkBack": true,
-                    "lastRedeemed": "12/12/16" 
-                }
-            ]
-        }
-    ]
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "something@nowhere.com",
+    "address": "1 Home St.",
+    "city": "Boston",
+    "state": "MA",
+    "zip": "12345",
+    "phone": "555-555-5555",
+    "position": "Retail Sales Specialist",
+    "password": "password",
+    "stores": [{
+        "name": "A Store Name",
+        "id": "1234567890",
+        "address": "1 Market St.",
+        "city": "Beantown",
+        "state": "MA",
+        "generalComments": "store wants paperwork back",
+        "person": [{
+            "name": "Jill White",
+            "position": "manager",
+            "comment": "has a son named brian."
+        }, {
+            "name": "Chaz Bono",
+            "position": "accountant",
+            "comment": "only works 10-2pm"
+        }],
+        "tier": "gold",
+        "havePaperwork": true,
+        "wantPaperworkBack": true,
+        "lastRedeemed": "12/12/16"
+    }, {
+        "name": "A Deli Name",
+        "id": "2234567890",
+        "address": "1 Two Ln.",
+        "city": "Beanville",
+        "state": "MA",
+        "generalComments": "store hates people",
+        "person": [{
+            "name": "George Burns",
+            "position": "store manager",
+            "comment": "stupid rich bastard."
+        }, {
+            "name": "Homer Simpson",
+            "position": "deli manager",
+            "comment": "has very little hair"
+        }],
+        "tier": "silver",
+        "havePaperwork": false,
+        "wantPaperworkBack": true,
+        "lastRedeemed": "12/12/16"
+    }]
+}
+{
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "email": "jane@email.com",
+    "address": "1 some Ave.",
+    "city": "Fenway",
+    "state": "MA",
+    "zip": "98765",
+    "phone": "555-555-5555",
+    "position": "Retail Sales Specialist",
+    "password": "password",
+    "stores": [{
+        "name": "Some Deli",
+        "id": "98765432",
+        "address": "1 Deli St.",
+        "city": "Beanville",
+        "state": "MA",
+        "generalComments": "store wants some money",
+        "person": [{
+            "name": "John Hancock",
+            "position": "owner",
+            "comment": "has a beach house."
+        }], 
+        "tier": "platinum",
+        "havePaperwork": false,
+        "wantPaperworkBack": true,
+        "lastRedeemed": "12/1/15"
+    }, {
+        "name": "Another Place",
+        "id": "2234567890",
+        "address": "2 buyers Ln.",
+        "city": "Vaudeville",
+        "state": "VA",
+        "generalComments": "store has liquor",
+        "person": [{
+            "name": "Jack Hennesy",
+            "position": "accountant",
+            "comment": "stupid person"
+        }, {
+            "name": "Jerry Handler",
+            "position": "deli manager",
+            "comment": "has a good staff"
+        }, {
+            "name": "Vicky Sours",
+            "position": "assistant manager",
+            "comment": "off on Wednesdays"
+        }],
+        "tier": "silver",
+        "havePaperwork": false,
+        "wantPaperworkBack": false,
+        "lastRedeemed": "1/08/17"
+    }]
 }

@@ -12,21 +12,21 @@ const userSchema = mongoose.Schema({
     phone: { type: String },
     position: { type: String, required: true },
     stores: [{
-        name: { type: String },
-        id: { type: String },
-        address: { type: String },
-        city: { type: String },
-        state: { type: String },
-        generalComments: { type: String },
-        tier: { type: String },
+        name: String,
+        store_id: String,
+        address: String,
+        city: String,
+        state: String,
+        generalComments: String,
+        tier: String,
         person: [{
-            name: { type: String },
-            position: { type: String },
-            comment: { type: String }
+            name: String,
+            position: String,
+            comment: String
         }],
-        havePaperwork: { type: Boolean },
-        wantPaperworkBack: { type: Boolean },
-        lastRedeemed: { type: Date }
+        havePaperwork: Boolean,
+        wantPaperworkBack: Boolean,
+        lastRedeemed: Date
     }]
 });
 
@@ -43,23 +43,7 @@ userSchema.methods.apiRepr = function() {
         zip: this.zip,
         phone: this.phone,
         position: this.position,
-        stores: [{
-            name: this.name,
-            id: this.id,  //
-            address: this.address,
-            city: this.city,
-            state: this.state,
-            generalComments: this.generalComments,
-            tier: this.tier,
-            person: [{
-                name: this.person,
-                position: this.position,
-                comment: this.comment
-            }],
-            havePaperwork: this.havePaperwork,
-            wantPaperworkBack: this.wantPaperworkBack,
-            lastRedeemed: this.lastRedeemed
-        }]
+        stores: this.stores
     };
 }
 

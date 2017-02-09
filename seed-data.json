@@ -1,4 +1,4 @@
-var MOCK_USER_DATA = {
+{
 	"users": [
         {
             "firstName": "John",
@@ -10,7 +10,7 @@ var MOCK_USER_DATA = {
             "zip": "12345",
             "phone": "555-555-5555",
             "position": "Retail Sales Specialist",
-            "password": "password"
+            "password": "password",
             "stores": [
                 {
                     "name": "A Store Name",
@@ -19,7 +19,6 @@ var MOCK_USER_DATA = {
                     "city": "Beantown",
                     "state": "MA",
                     "generalComments": "store wants paperwork back",
-                    //user can add multiple contacts
                     "person": [
                         {
                             "name": "Jill White",
@@ -36,9 +35,32 @@ var MOCK_USER_DATA = {
                     "havePaperwork": true,
                     "wantPaperworkBack": true,
                     "lastRedeemed": "12/12/16" 
-                    //use function to also display quarter
+                },
+                {
+                    "name": "A Deli Name",
+                    "id": "2234567890",
+                    "address": "1 Two Ln.",
+                    "city": "Beanville",
+                    "state": "MA",
+                    "generalComments": "store hates people",
+                    "person": [
+                        {
+                            "name": "George Burns",
+                            "position": "store manager",
+                            "comment": "stupid rich bastard."
+                        },
+                        {
+                            "name": "Homer Simpson",
+                            "position": "deli manager",
+                            "comment": "has very little hair"
+                        }
+                    ],
+                    "tier": "silver",
+                    "havePaperwork": false,
+                    "wantPaperworkBack": true,
+                    "lastRedeemed": "12/12/16" 
                 }
             ]
         }
     ]
-};
+}

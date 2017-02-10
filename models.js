@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
         state: String,
         generalComments: String,
         tier: String,
-        person: [{
+        personnel: [{
             name: String,
             position: String,
             comment: String

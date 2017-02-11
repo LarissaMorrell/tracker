@@ -16,7 +16,7 @@
         "city": "Beantown",
         "state": "MA",
         "generalComments": "store wants paperwork back",
-        "person": [{
+        "personnel": [{
             "name": "Jill White",
             "position": "manager",
             "comment": "has a son named brian."
@@ -36,7 +36,7 @@
         "city": "Beanville",
         "state": "MA",
         "generalComments": "store hates people",
-        "person": [{
+        "personnel": [{
             "name": "George Burns",
             "position": "store manager",
             "comment": "stupid rich bastard."
@@ -50,8 +50,7 @@
         "wantPaperworkBack": true,
         "lastRedeemed": "12/12/16"
     }]
-}
-{
+} {
     "firstName": "Jane",
     "lastName": "Doe",
     "email": "jane@email.com",
@@ -69,11 +68,11 @@
         "city": "Beanville",
         "state": "MA",
         "generalComments": "store wants some money",
-        "person": [{
+        "personnel": [{
             "name": "John Hancock",
             "position": "owner",
             "comment": "has a beach house."
-        }], 
+        }],
         "tier": "platinum",
         "havePaperwork": false,
         "wantPaperworkBack": true,
@@ -85,10 +84,10 @@
         "city": "Vaudeville",
         "state": "VA",
         "generalComments": "store has liquor",
-        "person": [{
+        "personnel": [{
             "name": "Jack Hennesy",
             "position": "accountant",
-            "comment": "stupid person"
+            "comment": "stupid personnel"
         }, {
             "name": "Jerry Handler",
             "position": "deli manager",

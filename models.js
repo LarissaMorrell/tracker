@@ -10,24 +10,9 @@ const userSchema = mongoose.Schema({
     state: { type: String },
     zip: { type: String },
     phone: { type: String },
-    position: { type: String, required: true },
-    stores: [{
-        name: String,
-        store_id: String,
-        address: String,
-        city: String,
-        state: String,
-        generalComments: String,
-        tier: String,
-        personnel: [{
-            name: String,
-            position: String,
-            comment: String
-        }],
-        havePaperwork: Boolean,
-        wantPaperworkBack: Boolean,
-        lastRedeemed: Date
-    }]
+    company: { type: String },
+    position: { type: String },
+    store_ids: { type: Array }
 });
 
 userSchema.methods.apiRepr = function() {
@@ -43,10 +28,46 @@ userSchema.methods.apiRepr = function() {
         zip: this.zip,
         phone: this.phone,
         position: this.position,
-        stores: this.stores
+        store_ids: this.store_ids
+    };
+}
+
+const storeSchema = mongoose.Schema({
+    user_assigned_id: { type: String, required: true },
+    name: { type: String, required: true },
+    address: { type: String },
+    city: { type: String },
+    state: { type: String },
+    generalComments: { type: String },
+    tier: { type: String },
+    personnel: [{
+        name: String,
+        position: String,
+        comment: String
+    }],
+    havePaperwork: { type: Boolean },
+    wantPaperworkBack: { type: Boolean },
+    lastRedeemed: { type: Date }
+});
+
+storeSchema.methods.apiRepr = function() {
+    return {
+        id: this._id,
+        user_assigned_id: this.user_assigned_id,
+        name: this.name,
+        address: this.address,
+        city: this.city,
+        state: this.state,
+        generalComments: this.generalComments,
+        tier: this.tier,
+        personnel: this.personnel,
+        havePaperwork: this.havePaperwork,
+        wantPaperworkBack: this.wantPaperworkBack,
+        lastRedeemed: this.lastRedeemed
     };
 }
 
 const User = mongoose.model('User', userSchema);
+const Store = mongoose.model('Store', storeSchema);
 
-module.exports = { User };
+module.exports = { User, Store };

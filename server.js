@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { DATABASE_URL, PORT } = require('./config');
 const app = express();
-const { User } = require('./models');
+const { User, Store } = require('./models');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
-exports.app = app;
+
 
 mongoose.Promise = global.Promise;
 
@@ -18,6 +18,19 @@ app.get('/user', (req, res) => {
         .exec()
         .then(users => {
             res.json(users.map(user => user.apiRepr()));
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: 'something went terribly wrong' });
+        });
+});
+
+app.get('/store', (req, res) => {
+    Store
+        .find()
+        .exec()
+        .then(stores => {
+            res.json(stores.map(store => store.apiRepr()));
         })
         .catch(err => {
             console.error(err);
@@ -36,10 +49,25 @@ app.get('/user/:id', (req, res) => {
         });
 });
 
+app.get('/store/:id', (req, res) => {
+    Store
+        .findById(req.params.id)
+        .exec()
+        .then(store => res.json(store.apiRepr()))
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' })
+        });
+});
+
+
+
+
+
 
 
 app.post('/user', (req, res) => {
-    const requiredFields = ['firstName', 'lastName', 'email', 'password', 'position'];
+    const requiredFields = ['firstName', 'lastName', 'email', 'password'];
     for (let i = 0; i < requiredFields.length; i++) {
         const field = requiredFields[i];
         if (!(field in req.body)) {
@@ -60,7 +88,7 @@ app.post('/user', (req, res) => {
             zip: req.body.zip,
             phone: req.body.phone,
             position: req.body.position,
-            stores: req.body.stores
+            store_ids: req.body.store_ids
         })
         .then(
             user => res.status(201).json(user.apiRepr()))
@@ -70,19 +98,55 @@ app.post('/user', (req, res) => {
         });
 });
 
+app.post('/store', (req, res) => {
+    const requiredFields = ['user_assigned_id', 'name'];
+    for (let i = 0; i < requiredFields.length; i++) {
+        const field = requiredFields[i];
+        if (!(field in req.body)) {
+            const message = `Missing \`${field}\` in request body`
+            console.error(message);
+            return res.status(400).send(message);
+        }
+    }
+    Store
+        .create({
+            user_assigned_id: req.body.user_assigned_id,
+            name: req.body.name,
+            address: req.body.address,
+            city: req.body.city,
+            state: req.body.state,
+            generalComments: req.body.generalComments,
+            tier: req.body.tier,
+            personnel: req.body.personnel,
+            havePaperwork: req.body.havePaperwork,
+            wantPaperworkBack: req.body.wantPaperworkBack,
+            lastRedeemed: req.body.lastRedeemed
+        })
+        .then(
+            store => res.status(201).json(store.apiRepr()))
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
+        });
+});
 
-app.put('/user/:id', (req, res) => {
-    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-        const message = (
-            `Request path id (${req.params.id}) and request body id ` +
-            `(${req.body.id}) must match`);
+
+
+
+
+
+
+app.put('/user/', (req, res) => {
+    if (!req.body.id) {
+        const message = (`User id is required for PUT request`);
         console.error(message);
         res.status(400).json({ message: message });
     }
     const toUpdate = {};
-    const updateableFields = ['firstName', 'lastName', 'email',
-        'password', 'address', 'city', 'state', 'zip', 'phone', 
-        'position', 'stores'];
+    const updateableFields = ['firstName', 'lastName', 'email', 'password',
+        'address', 'city', 'state', 'zip', 'phone', 'company', 'position',
+        'store_ids'
+    ];
 
     updateableFields.forEach(field => {
         if (field in req.body) {
@@ -91,20 +155,63 @@ app.put('/user/:id', (req, res) => {
     });
 
     User
-        .findByIdAndUpdate(req.params.id, { $set: toUpdate })
+        .findByIdAndUpdate(req.body.id, { $set: toUpdate })
+        .exec()
+        .then(user => res.status(204).end())
+        .catch(err => res.status(500).json({ message: 'Internal server error' }));
+});
+
+app.put('/store/', (req, res) => {
+    if (!req.body.id) {
+        const message = (`id of store is required for PUT request`);
+        console.error(message);
+        res.status(400).json({ message: message });
+    }
+    const toUpdate = {};
+    const updateableFields = ['user_assigned_id', 'name', 'address', 'city',
+        'state', 'generalComments', 'tier', 'personnel', 'havePaperwork',
+        'wantPaperworkBack', 'lastRedeemed'
+    ];
+
+    updateableFields.forEach(field => {
+        if (field in req.body) {
+            toUpdate[field] = req.body[field];
+        }
+    });
+
+    Store
+        .findByIdAndUpdate(req.body.id, { $set: toUpdate })
         .exec()
         .then(user => res.status(204).end())
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
 
+
+
+
+
+
 app.delete('/user/:id', (req, res) => {
-  User
-    .findByIdAndRemove(req.params.id)
-    .exec()
-    .then(user => res.status(204).end())
-    .catch(err => res.status(500).json({message: 'Internal server error'}));
+    User
+        .findByIdAndRemove(req.params.id)
+        .exec()
+        .then(user => res.status(204).end())
+        .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
+
+app.delete('/store/:id', (req, res) => {
+    Store
+        .findByIdAndRemove(req.params.id)
+        .exec()
+        .then(user => res.status(204).end())
+        .catch(err => res.status(500).json({ message: 'Internal server error' }));
+});
+
+
+
+
+
 
 
 app.use('*', function(req, res) {

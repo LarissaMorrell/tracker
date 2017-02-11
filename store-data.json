@@ -1,0 +1,103 @@
+{
+    "user_assigned_id": "X123456",
+    "name": "A Store Name",
+    "address": "1 Market St.",
+    "city": "Beantown",
+    "state": "MA",
+    "generalComments": "store wants paperwork back",
+    "personnel": [{
+        "name": "Jill White",
+        "position": "manager",
+        "comment": "has a son named brian."
+    }, {
+        "name": "Chaz Bono",
+        "position": "accountant",
+        "comment": "only works 10-2pm"
+    }],
+    "tier": "gold",
+    "havePaperwork": true,
+    "wantPaperworkBack": true,
+    "lastRedeemed": "12/12/16"
+} {
+    "user_assigned_id": "M234567",
+    "name": "A Deli Name",
+    "address": "1 Two Ln.",
+    "city": "Beanville",
+    "state": "MA",
+    "generalComments": "store hates people",
+    "personnel": [{
+        "name": "George Burns",
+        "position": "store manager",
+        "comment": "stupid rich bastard."
+    }, {
+        "name": "Homer Simpson",
+        "position": "deli manager",
+        "comment": "has very little hair"
+    }],
+    "tier": "silver",
+    "havePaperwork": false,
+    "wantPaperworkBack": true,
+    "lastRedeemed": "12/12/16"
+} {
+    "user_assigned_id": "X345678",
+    "name": "Some Deli",
+    "address": "1 Deli St.",
+    "city": "Beanville",
+    "state": "MA",
+    "generalComments": "store wants some money",
+    "personnel": [{
+        "name": "John Hancock",
+        "position": "owner",
+        "comment": "has a beach house."
+    }],
+    "tier": "platinum",
+    "havePaperwork": true,
+    "wantPaperworkBack": false,
+    "lastRedeemed": "12/1/15"
+} {
+    "user_assigned_id": "M456789",
+    "name": "Another Place",
+    "address": "2 buyers Ln.",
+    "city": "Vaudeville",
+    "state": "VA",
+    "generalComments": "store has liquor",
+    "personnel": [{
+        "name": "Jack Hennesy",
+        "position": "accountant",
+        "comment": "stupid personnel"
+    }, {
+        "name": "Jerry Handler",
+        "position": "deli manager",
+        "comment": "has a good staff"
+    }, {
+        "name": "Vicky Sours",
+        "position": "assistant manager",
+        "comment": "off on Wednesdays"
+    }],
+    "tier": "silver",
+    "havePaperwork": false,
+    "wantPaperworkBack": false,
+    "lastRedeemed": "1/08/17"
+}
+
+{
+    "user_assigned_id": "M098765",
+    "name": "Schroeder's Deli",
+    "address": "8 meat street",
+    "city": "Littleville",
+    "state": "MA",
+    "generalComments": "store opens at 10am",
+    "personnel": [{
+        "name": "Jeremy Messenger",
+        "position": "store manager",
+        "comment": "likes his wine"
+    }, {
+        "name": "Jane Dole",
+        "position": "supervisor",
+        "comment": "hates to laugh"
+    }],
+    "tier": "silver",
+    "havePaperwork": false,
+    "wantPaperworkBack": true,
+    "lastRedeemed": "1/3/16"
+}

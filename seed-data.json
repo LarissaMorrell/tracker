@@ -9,47 +9,7 @@
     "phone": "555-555-5555",
     "position": "Retail Sales Specialist",
     "password": "password",
-    "stores": [{
-        "name": "A Store Name",
-        "id": "1234567890",
-        "address": "1 Market St.",
-        "city": "Beantown",
-        "state": "MA",
-        "generalComments": "store wants paperwork back",
-        "personnel": [{
-            "name": "Jill White",
-            "position": "manager",
-            "comment": "has a son named brian."
-        }, {
-            "name": "Chaz Bono",
-            "position": "accountant",
-            "comment": "only works 10-2pm"
-        }],
-        "tier": "gold",
-        "havePaperwork": true,
-        "wantPaperworkBack": true,
-        "lastRedeemed": "12/12/16"
-    }, {
-        "name": "A Deli Name",
-        "id": "2234567890",
-        "address": "1 Two Ln.",
-        "city": "Beanville",
-        "state": "MA",
-        "generalComments": "store hates people",
-        "personnel": [{
-            "name": "George Burns",
-            "position": "store manager",
-            "comment": "stupid rich bastard."
-        }, {
-            "name": "Homer Simpson",
-            "position": "deli manager",
-            "comment": "has very little hair"
-        }],
-        "tier": "silver",
-        "havePaperwork": false,
-        "wantPaperworkBack": true,
-        "lastRedeemed": "12/12/16"
-    }]
+    "store_ids": []
 } {
     "firstName": "Jane",
     "lastName": "Doe",
@@ -61,45 +21,17 @@
     "phone": "555-555-5555",
     "position": "Retail Sales Specialist",
     "password": "password",
-    "stores": [{
-        "name": "Some Deli",
-        "id": "98765432",
-        "address": "1 Deli St.",
-        "city": "Beanville",
-        "state": "MA",
-        "generalComments": "store wants some money",
-        "personnel": [{
-            "name": "John Hancock",
-            "position": "owner",
-            "comment": "has a beach house."
-        }],
-        "tier": "platinum",
-        "havePaperwork": false,
-        "wantPaperworkBack": true,
-        "lastRedeemed": "12/1/15"
-    }, {
-        "name": "Another Place",
-        "id": "2234567890",
-        "address": "2 buyers Ln.",
-        "city": "Vaudeville",
-        "state": "VA",
-        "generalComments": "store has liquor",
-        "personnel": [{
-            "name": "Jack Hennesy",
-            "position": "accountant",
-            "comment": "stupid personnel"
-        }, {
-            "name": "Jerry Handler",
-            "position": "deli manager",
-            "comment": "has a good staff"
-        }, {
-            "name": "Vicky Sours",
-            "position": "assistant manager",
-            "comment": "off on Wednesdays"
-        }],
-        "tier": "silver",
-        "havePaperwork": false,
-        "wantPaperworkBack": false,
-        "lastRedeemed": "1/08/17"
-    }]
-}
+    "store_ids": []
+} {
+    "firstName": "Chris",
+    "lastName": "Angler",
+    "email": "hello@email.com",
+    "address": "123 Count St.",
+    "city": "Boston",
+    "state": "MA",
+    "zip": "12345",
+    "phone": "555-555-5555",
+    "position": "Retail Sales Specialist",
+    "password": "password",
+    "store_ids": []
+} 

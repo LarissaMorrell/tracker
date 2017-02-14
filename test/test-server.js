@@ -80,11 +80,11 @@ function pad(num, size) {
     return s.substr(s.length - size);
 }
 
-function generateStoreIds(){
+function generateStoreIds() {
     var store_ids = [];
     let rand = getRand(20);
-    while(store_ids.length < 20){
-        store_ids.push(faker.random.number);
+    while (store_ids.length < 20) {
+        store_ids.push(faker.random.number(99999999));
     }
     return store_ids;
 }
@@ -92,20 +92,21 @@ function generateStoreIds(){
 
 function generateUserData() {
     var users = [];
-    let rand = getRand(10);
+    let rand = getRand(15);
     do {
         users.push({
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
             email: faker.internet.email(),
             password: faker.internet.password(8),
+            address: faker.address.streetAddress(),
             city: faker.address.city(),
             state: faker.address.stateAbbr(),
             zip: faker.address.zipCode(),
             //format 587-753-7028
             phone: faker.phone.phoneNumber(0),
             position: 'Retail Sales Specialist',
-            store_ids: generateStoreIds
+            store_ids: generateStoreIds()
         });
     } while (users.length < rand);
 
@@ -123,6 +124,8 @@ function tearDownDb() {
             .then(result => resolve(result))
             .catch(err => reject(err))
     });
+    // console.warn('Deleting database');
+    // return mongoose.connection.dropDatabase();
 }
 
 describe('Users API resource', function() {
@@ -153,6 +156,47 @@ describe('Users API resource', function() {
                 })
                 .then(count => {
                     res.body.should.have.length.of(count);
+                });
+        });
+
+        it('should return users with right fields', function() {
+
+            let resUser;
+            return chai.request(app)
+                .get('/user')
+                .then(function(res) {
+
+                    res.should.have.status(200);
+                    res.should.be.json;
+                    res.body.should.be.a('array');
+                    res.body.should.have.length.of.at.least(1);
+
+                    res.body.forEach(function(user) {
+                        user.should.be.a('object');
+                        user.should.include.keys('id', 'firstName', 'lastName', 'email',
+                            'password', 'address', 'city', 'state', 'zip', 'phone',
+                            'position', 'store_ids');
+                    });
+                    // just check one of the users that its values match with those in db
+                    // and we'll assume it's true for rest
+                    resUser = res.body[0];
+                    return User.findById(resUser.id).exec();
+                })
+                .then(user => {
+                    resUser.firstName.should.equal(user.firstName);
+                    resUser.lastName.should.equal(user.lastName);
+                    resUser.email.should.equal(user.email);
+                    resUser.password.should.equal(user.password);
+                    resUser.address.should.equal(user.address);
+                    resUser.city.should.equal(user.city);
+                    resUser.state.should.equal(user.state);
+                    resUser.zip.should.equal(user.zip);
+                    resUser.phone.should.equal(user.phone);
+                    resUser.position.should.equal(user.position);
+                    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
+                        "\nresUser: \n" + resUser.store_ids);
+                    console.log("user:\n" + user.store_ids);
+                    resUser.store_ids.should.deep.equal(user.store_ids);
                 });
         });
     })
@@ -204,7 +248,7 @@ function generateStoreData() {
             personnel: generatePersonnel(),
             havePaperwork: faker.random.boolean(),
             wantPaperworkBack: faker.random.boolean(),
-            lastRedeemed: faker.date.past(2)
+            lastRedeemed: faker.date.past()
         });
     } while (stores.length < rand);
     return Store.insertMany(stores);
@@ -240,6 +284,50 @@ describe('Store API resource', function() {
                     res.body.should.have.length.of(count);
                 });
         });
+
+        it('should return stores with right fields', function() {
+
+            let resStore;
+            return chai.request(app)
+                .get('/store')
+                .then(function(res) {
+
+                    res.should.have.status(200);
+                    res.should.be.json;
+                    res.body.should.be.a('array');
+                    res.body.should.have.length.of.at.least(1);
+
+                    res.body.forEach(function(user) {
+                        user.should.be.a('object');
+                        user.should.include.keys('id', 'name', 'user_assigned_id', 'address',
+                            'city', 'state', 'generalComments', 'tier', 'havePaperwork',
+                            'wantPaperworkBack', 'lastRedeemed', 'personnel');
+                    });
+                    // just check one of the users that its values match with those in db
+                    // and we'll assume it's true for rest
+                    resStore = res.body[0];
+                    return Store.findById(resStore.id).exec();
+                })
+                .then(store => {
+                    resStore.name.should.equal(store.name);
+                    resStore.user_assigned_id.should.equal(store.user_assigned_id);
+                    resStore.address.should.equal(store.address);
+                    resStore.city.should.equal(store.city);
+                    resStore.state.should.equal(store.state);
+                    resStore.generalComments.should.equal(store.generalComments);
+                    if (store.tier) resStore.tier.should.equal(store.tier); //if store.tier is not null
+                    resStore.tier.should.be.oneOf([store.tier, null]);
+                    resStore.havePaperwork.should.equal(store.havePaperwork);
+                    resStore.wantPaperworkBack.should.equal(store.wantPaperworkBack);
+                    console.log("************************************************************************" + 
+                        "\nresStore lastRedeemed: " + resStore.lastRedeemed);
+                    console.log("store lastRedeemed: " + store.lastRedeemed);
+                    resStore.lastRedeemed.should.equal(store.lastRedeemed);
+                    // console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
+                        // "\nresStore: " + resStore.personnel);
+                    // console.log("store: " + store.personnel);
+                    resStore.personnel.should.equal(store.personnel);
+                });
+        });
     })
 })
-

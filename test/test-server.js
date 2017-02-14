@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 // const server = require('../server.js');
 
 const should = chai.should();
+const assertArrays = require('chai-arrays');
+
 // const app = server.app;
 // const storage = server.storage;
 
@@ -13,6 +15,7 @@ const { app, runServer, closeServer } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
 
 chai.use(chaiHttp);
+chai.use(assertArrays);
 
 /*******************************************************
     Test for pages to open
@@ -68,6 +71,13 @@ describe('profile page', function() {
 
 
 /*******************************************************
+    &&    &&    &&&&&   &&&&&&&    &&&&&&
+    &&    &&   &&   &&  &&         &&   &&
+    &&    &&     &&     &&&&&      &&   &&
+    &&    &&       &&   &&         &&&&&
+    &&    &&   &&   &&  &&         &&  &&
+      &&&&      &&&&&   &&&&&&&    &&   &&
+
     Test endpoints for User API
 *******************************************************/
 
@@ -193,10 +203,7 @@ describe('Users API resource', function() {
                     resUser.zip.should.equal(user.zip);
                     resUser.phone.should.equal(user.phone);
                     resUser.position.should.equal(user.position);
-                    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
-                        "\nresUser: \n" + resUser.store_ids);
-                    console.log("user:\n" + user.store_ids);
-                    resUser.store_ids.should.deep.equal(user.store_ids);
+                    resUser.store_ids.should.be.equalTo(user.store_ids);
                 });
         });
     })
@@ -215,6 +222,13 @@ describe('Users API resource', function() {
 
 
 /*******************************************************
+        &&&&&   
+       &&   &&    &&                  &&&&&
+         &&     &&&&&&   &&    &&&&&  &&
+          &&      &&   &&  &&  &&     &&&&
+       &&   &&    &&   &&  &&  &&     &&
+        &&&&&     &&     &&    &&     &&&&&
+
     Test endpoints for Store API
 *******************************************************/
 
@@ -319,14 +333,11 @@ describe('Store API resource', function() {
                     resStore.tier.should.be.oneOf([store.tier, null]);
                     resStore.havePaperwork.should.equal(store.havePaperwork);
                     resStore.wantPaperworkBack.should.equal(store.wantPaperworkBack);
-                    console.log("************************************************************************" + 
-                        "\nresStore lastRedeemed: " + resStore.lastRedeemed);
-                    console.log("store lastRedeemed: " + store.lastRedeemed);
-                    resStore.lastRedeemed.should.equal(store.lastRedeemed);
+                    resStore.lastRedeemed.should.equal((store.lastRedeemed).toISOString());
                     // console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
-                        // "\nresStore: " + resStore.personnel);
-                    // console.log("store: " + store.personnel);
-                    resStore.personnel.should.equal(store.personnel);
+                    //     "\nresStore: " + typeof resStore.personnel);
+                    // console.log("store: " + typeof store.personnel);
+                    resStore.personnel.length.should.equal(store.personnel.length);
                 });
         });
     })

@@ -71,12 +71,12 @@ describe('profile page', function() {
 
 
 /*******************************************************
-    &&    &&    &&&&&   &&&&&&&    &&&&&&
-    &&    &&   &&   &&  &&         &&   &&
-    &&    &&     &&     &&&&&      &&   &&
-    &&    &&       &&   &&         &&&&&
-    &&    &&   &&   &&  &&         &&  &&
-      &&&&      &&&&&   &&&&&&&    &&   &&
+    &&    &&   &&&&&   &&&&&&&  &&&&&&
+    &&    &&  &&   &&  &&       &&   &&
+    &&    &&    &&     &&&&&    &&   &&
+    &&    &&      &&   &&       &&&&&
+    &&    &&  &&   &&  &&       &&  &&
+      &&&&     &&&&&   &&&&&&&  &&   &&
 
     Test endpoints for User API
 *******************************************************/
@@ -100,27 +100,31 @@ function generateStoreIds() {
 }
 
 
-function generateUserData() {
+function seedUserData() {
     var users = [];
     let rand = getRand(15);
     do {
-        users.push({
-            firstName: faker.name.firstName(),
-            lastName: faker.name.lastName(),
-            email: faker.internet.email(),
-            password: faker.internet.password(8),
-            address: faker.address.streetAddress(),
-            city: faker.address.city(),
-            state: faker.address.stateAbbr(),
-            zip: faker.address.zipCode(),
-            //format 587-753-7028
-            phone: faker.phone.phoneNumber(0),
-            position: 'Retail Sales Specialist',
-            store_ids: generateStoreIds()
-        });
+        users.push(generateUser());
     } while (users.length < rand);
 
     return User.insertMany(users);
+}
+
+function generateUser() {
+    return {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(8),
+        address: faker.address.streetAddress(),
+        city: faker.address.city(),
+        state: faker.address.stateAbbr(),
+        zip: faker.address.zipCode(),
+        //format 587-753-7028
+        phone: faker.phone.phoneNumber(0),
+        position: 'Retail Sales Specialist',
+        store_ids: generateStoreIds()
+    };
 }
 
 
@@ -143,7 +147,7 @@ describe('Users API resource', function() {
         return runServer(TEST_DATABASE_URL);
     });
     beforeEach(function() {
-        return generateUserData();
+        return seedUserData();
     });
     afterEach(function() {
         return tearDownDb();
@@ -206,8 +210,53 @@ describe('Users API resource', function() {
                     resUser.store_ids.should.be.equalTo(user.store_ids);
                 });
         });
-    })
-})
+    });
+
+
+    describe('POST endpoint', function() {
+        it('should add a new user', function() {
+
+            const newUser = generateUser();
+
+            return chai.request(app)
+                .post('/user')
+                .send(newUser)
+                .then(function(res) {
+                    res.should.have.status(201);
+                    res.should.be.json;
+                    res.body.should.be.a('object');
+                    res.body.should.include.keys('id', 'firstName', 'lastName', 'email',
+                        'password', 'address', 'city', 'state', 'zip', 'phone',
+                        'position', 'store_ids');
+                    res.body.firstName.should.equal(newUser.firstName);
+                    res.body.lastName.should.equal(newUser.lastName);
+                    res.body.email.should.equal(newUser.email);
+                    res.body.password.should.equal(newUser.password);
+                    res.body.address.should.equal(newUser.address);
+                    res.body.city.should.equal(newUser.city);
+                    res.body.state.should.equal(newUser.state);
+                    res.body.zip.should.equal(newUser.zip);
+                    res.body.phone.should.equal(newUser.phone);
+                    res.body.position.should.equal(newUser.position);
+                    res.body.store_ids.should.be.equalTo(newUser.store_ids);
+                    return User.findById(res.body.id).exec();
+                })
+                .then(function(user) {
+                    newUser.firstName.should.equal(user.firstName);
+                    newUser.lastName.should.equal(user.lastName);
+                    newUser.email.should.equal(user.email);
+                    newUser.password.should.equal(user.password);
+                    newUser.address.should.equal(user.address);
+                    newUser.city.should.equal(user.city);
+                    newUser.state.should.equal(user.state);
+                    newUser.zip.should.equal(user.zip);
+                    newUser.phone.should.equal(user.phone);
+                    newUser.position.should.equal(user.position);
+                    newUser.store_ids.should.be.equalTo(user.store_ids);
+                });
+        });
+    });
+});
 
 
 
@@ -245,27 +294,31 @@ function generatePersonnel() {
     return personnel;
 }
 
-function generateStoreData() {
+function seedStoreData() {
     var stores = [];
-
     var rand = getRand(50);
-    do {
-        stores.push({
-            name: faker.company.companyName(),
-            user_assigned_id: faker.random.word().charAt[0] + pad(getRand(999999), 6),
-            address: faker.address.streetAddress(),
-            city: faker.address.city(),
-            state: faker.address.stateAbbr(),
-            generalComments: faker.lorem.sentences(2),
-            tier: faker.random.arrayElement(
-                ['silver', 'gold', 'platinum']),
-            personnel: generatePersonnel(),
-            havePaperwork: faker.random.boolean(),
-            wantPaperworkBack: faker.random.boolean(),
-            lastRedeemed: faker.date.past()
-        });
-    } while (stores.length < rand);
+
+    while (stores.length < rand) {
+        stores.push(generateStore());
+    };
     return Store.insertMany(stores);
+}
+
+function generateStore() {
+    return {
+        name: faker.company.companyName(),
+        user_assigned_id: faker.random.word().charAt[0] + pad(getRand(999999), 6),
+        address: faker.address.streetAddress(),
+        city: faker.address.city(),
+        state: faker.address.stateAbbr(),
+        generalComments: faker.lorem.sentences(2),
+        tier: faker.random.arrayElement(
+            ['silver', 'gold', 'platinum']),
+        personnel: generatePersonnel(),
+        havePaperwork: faker.random.boolean(),
+        wantPaperworkBack: faker.random.boolean(),
+        lastRedeemed: faker.date.past()
+    }
 }
 
 describe('Store API resource', function() {
@@ -273,7 +326,7 @@ describe('Store API resource', function() {
         return runServer(TEST_DATABASE_URL);
     });
     beforeEach(function() {
-        return generateStoreData();
+        return seedStoreData();
     });
     afterEach(function() {
         return tearDownDb();
@@ -309,16 +362,13 @@ describe('Store API resource', function() {
                     res.should.have.status(200);
                     res.should.be.json;
                     res.body.should.be.a('array');
-                    res.body.should.have.length.of.at.least(1);
 
-                    res.body.forEach(function(user) {
-                        user.should.be.a('object');
-                        user.should.include.keys('id', 'name', 'user_assigned_id', 'address',
+                    res.body.forEach(function(store) {
+                        store.should.be.a('object');
+                        store.should.include.keys('id', 'name', 'user_assigned_id', 'address',
                             'city', 'state', 'generalComments', 'tier', 'havePaperwork',
                             'wantPaperworkBack', 'lastRedeemed', 'personnel');
                     });
-                    // just check one of the users that its values match with those in db
-                    // and we'll assume it's true for rest
                     resStore = res.body[0];
                     return Store.findById(resStore.id).exec();
                 })
@@ -328,9 +378,8 @@ describe('Store API resource', function() {
                     resStore.address.should.equal(store.address);
                     resStore.city.should.equal(store.city);
                     resStore.state.should.equal(store.state);
-                    resStore.generalComments.should.equal(store.generalComments);
-                    if (store.tier) resStore.tier.should.equal(store.tier); //if store.tier is not null
-                    resStore.tier.should.be.oneOf([store.tier, null]);
+                    resStore.generalComments.should.be.oneOf([store.generalComments, null]);
+                    resStore.tier.should.equal(store.tier);
                     resStore.havePaperwork.should.equal(store.havePaperwork);
                     resStore.wantPaperworkBack.should.equal(store.wantPaperworkBack);
                     resStore.lastRedeemed.should.equal((store.lastRedeemed).toISOString());
@@ -340,5 +389,55 @@ describe('Store API resource', function() {
                     resStore.personnel.length.should.equal(store.personnel.length);
                 });
         });
-    })
-})
+    });
+
+    describe('POST endpoint', function() {
+        it('should add a new store', function() {
+
+            const newStore = generateStore();
+
+            return chai.request(app)
+                .post('/store')
+                .send(newStore)
+                .then(function(res) {
+                    res.should.have.status(201);
+                    res.should.be.json;
+                    res.body.should.be.a('object');
+                    res.body.should.include.keys('id', 'name', 'user_assigned_id', 'address',
+                        'city', 'state', 'generalComments', 'tier', 'havePaperwork',
+                        'wantPaperworkBack', 'lastRedeemed', 'personnel');
+                    res.body.name.should.equal(newStore.name);
+                    res.body.user_assigned_id.should.equal(newStore.user_assigned_id);
+                    res.body.address.should.equal(newStore.address);
+                    res.body.city.should.equal(newStore.city);
+                    res.body.state.should.equal(newStore.state);
+                    res.body.generalComments.should.equal(newStore.generalComments);
+                    res.body.tier.should.equal(newStore.tier);
+                    res.body.havePaperwork.should.equal(newStore.havePaperwork);
+                    res.body.wantPaperworkBack.should.equal(newStore.wantPaperworkBack);
+                    res.body.lastRedeemed.should.equal((newStore.lastRedeemed).toISOString());
+                    // console.log("+++++++++++++++++++++++++++++++++++++++++++++++++" + 
+                    //     "res personnel:\n" +  res.body.personnel);
+                    // console.log("newstore:\n" + newStore.personnel);
+                    // res.body.personnel.should.be.equalTo(newStore.personnel);
+                    return Store.findById(res.body.id).exec();
+                })
+                .then(function(store) {
+                    newStore.name.should.equal(store.name);
+                    newStore.user_assigned_id.should.equal(store.user_assigned_id);
+                    newStore.address.should.equal(store.address);
+                    newStore.city.should.equal(store.city);
+                    newStore.state.should.equal(store.state);
+                    newStore.generalComments.should.equal(store.generalComments);
+                    newStore.tier.should.equal(store.tier);
+                    newStore.havePaperwork.should.equal(store.havePaperwork);
+                    newStore.wantPaperworkBack.should.equal(store.wantPaperworkBack);
+                    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++\n" +
+                        "newStore: " + typeof newStore.lastRedeemed +
+                        "\nstore: " + typeof store.lastRedeemed);
+                    newStore.lastRedeemed.should.equal(store.lastRedeemed);
+                    newStore.personnel.length.should.be.equal(store.personnel.length);
+                });
+        });
+    });
+});

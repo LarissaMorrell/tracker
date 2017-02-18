@@ -89,8 +89,8 @@ function pad(num, size) {
 
 function generateStoreIds() {
     var store_ids = [];
-    let rand = getRand(20);
-    while (store_ids.length < 20) {
+    let rand = getRand(10);
+    while (store_ids.length < rand) {
         store_ids.push(faker.random.number(99999999));
     }
     return store_ids;
@@ -135,8 +135,6 @@ function tearDownDb() {
             .then(result => resolve(result))
             .catch(err => reject(err))
     });
-    // console.warn('Deleting database');
-    // return mongoose.connection.dropDatabase();
 }
 
 describe('Users API resource', function() {
@@ -255,45 +253,41 @@ describe('Users API resource', function() {
     });
 
 
-    // describe('PUT endpoint', function() {
+    
 
-    //     it('should update fields you send over', function() {
-    //         const updateData = {
-    //             address: faker.address.streetAddress(),
-    //             password: faker.internet.password(8),
-    //             store_ids: generateStoreIds()
-    //         };
-
-    //         return User
-    //             .findOne()
-    //             .exec()
-    //             .then(user => {
-    //                 updateData.id = user.id;
-
-    //                 return chai.request(app)
-    //                     .put('/user')
-    //                     .send(updateData);
-    //             })
-    //             .then(res => {
-    //                 res.should.have.status(204);
-    //                 res.body.should.be.a('object');
-    //                 res.body.address.should.equal(updateData.address);
-    //                 res.body.password.should.equal(updateData.password);
-    //                 res.body.store_ids.should.equalTo(updateData.store_ids);
-
-    //                 return User.findById(res.body.id).exec();
-    //             })
-    //             .then(user => {
-    //                 user.address.should.equal(updateData.title);
-    //                 user.internet.should.equal(updateData.content);
-    //                 user.store_ids.should.equalTo(updateData.store_ids);
-    //             });
-    //     });
-    // });
+    describe('PUT endpoint', function() {
+        it('should update fields you send over', function() {
+            const updateData = {
+                address: faker.address.streetAddress(),
+                password: faker.internet.password(8),
+                store_ids: generateStoreIds()
+            };
+            return User
+                .findOne()
+                .exec()
+                .then(function(user) {
+                    updateData.id = user.id;
+                    // make request then inspect it to make sure it reflects
+                    // data we sent
+                    return chai.request(app)
+                        .put(`/user/${user.id}`)
+                        .send(updateData);
+                })
+                .then(function(res) {
+                    res.should.have.status(204);
+                    return User.findById(updateData.id).exec();
+                })
+                .then(function(user) {
+                    user.address.should.equal(updateData.address);
+                    user.password.should.equal(updateData.password);
+                    user.store_ids.should.equalTo(updateData.store_ids);
+                });
+        });
+    });
 
 
     describe('DELETE endpoint', function() {
-        it('should delete a post by id', function() {
+        it('should delete a user by id', function() {
             let user;
 
             return User
@@ -308,10 +302,6 @@ describe('Users API resource', function() {
                     return User.findById(user.id);
                 })
                 .then(_user => {
-                    // when a variable's value is null, chaining `should`
-                    // doesn't work. so `_post.should.be.null` would raise
-                    // an error. `should.be.null(_post)` is how we can
-                    // make assertions about a null value.
                     should.not.exist(_user);
                 });
         });
@@ -344,12 +334,11 @@ describe('Users API resource', function() {
 function generatePersonnel() {
     var personnel = [];
     var rand = getRand(5);
-
-
+    
     while (personnel.length < rand) {
         personnel.push(generatePerson());
-        return personnel;
     };
+    return personnel;
 }
 
 function generatePerson() {
@@ -361,8 +350,8 @@ function generatePerson() {
 }
 
 function seedStoreData() {
-    var stores = [];
-    var rand = getRand(50);
+    const stores = [];
+    const rand = getRand(5);
 
     while (stores.length < rand) {
         stores.push(generateStore());
@@ -449,9 +438,6 @@ describe('Store API resource', function() {
                     resStore.havePaperwork.should.equal(store.havePaperwork);
                     resStore.wantPaperworkBack.should.equal(store.wantPaperworkBack);
                     resStore.lastRedeemed.should.equal((store.lastRedeemed).toISOString());
-                    // console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
-                    //     "\nresStore: " + typeof resStore.personnel);
-                    // console.log("store: " + typeof store.personnel);
                     resStore.personnel.length.should.equal(store.personnel.length);
                 });
         });
@@ -501,14 +487,60 @@ describe('Store API resource', function() {
                     newStore.tier.should.equal(store.tier);
                     newStore.havePaperwork.should.equal(store.havePaperwork);
                     newStore.wantPaperworkBack.should.equal(store.wantPaperworkBack);
-                    // console.log("+++++++++++++++++++++++++++++++++++++++++++++++++\n" +
-                    //     "newStore: " + typeof newStore.lastRedeemed +
-                    //     "\nstore: " + typeof store.lastRedeemed);
                     newStore.lastRedeemed.toString().trim().should
                         .equal(store.lastRedeemed.toString().trim());
-                    newStore.personnel.forEach(function(value, index) {
+                    if (newStore.personnel.length > 0) {
+                        newStore.personnel.forEach(function(value, index) {
+                            for (var prop in value) {
+                                value[prop].should.equal(store.personnel[index][prop]);
+                            }
+                        });
+                    };
+                });
+        });
+    });
+
+
+    describe('PUT endpoint', function() {
+
+        // strategy:
+        //  1. Get an existing restaurant from db
+        //  2. Make a PUT request to update that restaurant
+        //  3. Prove restaurant returned by request contains data we sent
+        //  4. Prove restaurant in db is correctly updated
+        it('should update fields you send over', function() {
+            const personnel = generatePersonnel();
+            const updateData = {
+                address: faker.address.streetAddress(),
+                city: faker.address.city(),
+                personnel: personnel
+            };
+
+            return Store
+                .findOne()
+                .exec()
+                .then(function(store) {
+                    updateData.id = store.id;
+
+                    // make request then inspect it to make sure it reflects
+                    // data we sent
+                    return chai.request(app)
+                        .put(`/store/${store.id}`)
+                        .send(updateData);
+                })
+                .then(function(res) {
+                    res.should.have.status(204);
+
+                    return Store.findById(updateData.id).exec();
+                })
+                .then(function(store) {
+                    store.address.should.equal(updateData.address);
+                    store.city.should.equal(updateData.city);
+                    store.personnel.forEach(function(value, index) {
                         for (var prop in value) {
-                            value[prop].should.equal(store.personnel[index][prop]);
+                            if (prop != "_id") {
+                                value[prop].should.equal(updateData.personnel[index][prop]);
+                            }
                         }
                     });
                 });
@@ -516,48 +548,8 @@ describe('Store API resource', function() {
     });
 
 
-    // describe('PUT endpoint', function() {
-
-    //     it('should update fields you send over', function() {
-    //         const updateData = {
-    //             address: faker.address.streetAddress(),
-    //             city: faker.address.city,
-    //             personnel: generatePersonnel()
-    //         };
-
-    //         return Store
-    //             .findOne()
-    //             .exec()
-    //             .then(store => {
-    //                 updateData.id = store.id;
-    //                 // console.log("****************************" + 
-    //                 //   "\nstore:\n" + store);
-
-    //                 return chai.request(app)
-    //                     .put(`/store/${store.id}`)
-    //                     .send(updateData);
-    //             })
-    //             .then(res => {
-    //                 res.should.have.status(201);
-    //                 res.should.be.json;
-    //                 res.body.should.be.a('object');
-    //                 res.body.address.should.equal(updateData.address);
-    //                 res.body.password.should.equal(updateData.password);
-    //                 res.body.store_ids.should.equalTo(updateData.store_ids);
-
-    //                 return store.findById(res.body.id).exec();
-    //             })
-    //             .then(store => {
-    //                 store.address.should.equal(updateData.title);
-    //                 store.internet.should.equal(updateData.content);
-    //                 store.store_ids.should.equalTo(updateData.store_ids);
-    //             });
-    //     });
-    // });
-
-
     describe('DELETE endpoint', function() {
-        it('should delete a post by id', function() {
+        it('should delete a store by id', function() {
             let store;
 
             return Store

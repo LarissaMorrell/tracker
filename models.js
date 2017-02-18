@@ -40,11 +40,12 @@ const storeSchema = mongoose.Schema({
     state: { type: String },
     generalComments: { type: String },
     tier: { type: String },
-    personnel: [{
-        name: String,
-        position: String,
-        comment: String
-    }],
+    personnel: {
+        type: Array
+        // name: String,
+        // position: String,
+        // comment: String
+    },
     havePaperwork: { type: Boolean },
     wantPaperworkBack: { type: Boolean },
     lastRedeemed: { type: Date }

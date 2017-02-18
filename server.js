@@ -136,12 +136,19 @@ app.post('/store', (req, res) => {
 
 
 
-app.put('/user/', (req, res) => {
-    if (!req.body.id) {
-        const message = (`User id is required for PUT request`);
+app.put('/user/:id', (req, res) => {
+    // ensure that the id in the request path and the one in request body match
+    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+        const message = (
+            `Request path id (${req.params.id}) and request body id ` +
+            `(${req.body.id}) must match`);
         console.error(message);
         res.status(400).json({ message: message });
     }
+
+    // we only support a subset of fields being updateable.
+    // if the user sent over any of the updatableFields, we udpate those values
+    // in document
     const toUpdate = {};
     const updateableFields = ['firstName', 'lastName', 'email', 'password',
         'address', 'city', 'state', 'zip', 'phone', 'company', 'position',
@@ -153,20 +160,31 @@ app.put('/user/', (req, res) => {
             toUpdate[field] = req.body[field];
         }
     });
-
     User
-        .findByIdAndUpdate(req.body.id, { $set: toUpdate })
+    // all key/value pairs in toUpdate will be updated -- that's what `$set` does
+        .findByIdAndUpdate(req.params.id, { $set: toUpdate })
         .exec()
         .then(user => res.status(204).end())
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
-app.put('/store/', (req, res) => {
-    if (!req.body.id) {
-        const message = (`id of store is required for PUT request`);
+
+
+
+
+app.put('/store/:id', (req, res) => {
+    // ensure that the id in the request path and the one in request body match
+    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+        const message = (
+            `Request path id (${req.params.id}) and request body id ` +
+            `(${req.body.id}) must match`);
         console.error(message);
         res.status(400).json({ message: message });
     }
+
+    // we only support a subset of fields being updateable.
+    // if the store sent over any of the updatableFields, we udpate those values
+    // in document
     const toUpdate = {};
     const updateableFields = ['user_assigned_id', 'name', 'address', 'city',
         'state', 'generalComments', 'tier', 'personnel', 'havePaperwork',
@@ -178,15 +196,13 @@ app.put('/store/', (req, res) => {
             toUpdate[field] = req.body[field];
         }
     });
-
     Store
-        .findByIdAndUpdate(req.body.id, { $set: toUpdate })
+    // all key/value pairs in toUpdate will be updated -- that's what `$set` does
+        .findByIdAndUpdate(req.params.id, { $set: toUpdate })
         .exec()
-        .then(user => res.status(204).end())
+        .then(store => res.status(204).end())
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
-
-
 
 
 
@@ -196,7 +212,7 @@ app.delete('/user/:id', (req, res) => {
     User
         .findByIdAndRemove(req.params.id)
         .exec()
-        .then(user => res.status(204).end())
+        .then(store => res.status(204).end())
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
@@ -204,7 +220,7 @@ app.delete('/store/:id', (req, res) => {
     Store
         .findByIdAndRemove(req.params.id)
         .exec()
-        .then(user => res.status(204).end())
+        .then(store => res.status(204).end())
         .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 

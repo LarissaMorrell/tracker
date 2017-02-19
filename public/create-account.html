@@ -8,14 +8,14 @@
 <body>
     <p>Sign up for an account</p>
     <a href="index.html">Home</a>
-    <form>
-        <input placeholder="First Name" type="text" name="" required>
-        <input placeholder="Last Name" type="text" name="" required>
-        <input placeholder="Email Address" type="email" name="" required>
-        <input placeholder="Phone Number" type="" name="">
-        <input placeholder="Street Address" type="text" name="">
-        <input placeholder="City" type="text" name="">
-        <select>
+    <form id='js-newAccount-form'>
+        <input placeholder="First Name" type="text" name="first-name" required>
+        <input placeholder="Last Name" type="text" name="last-name" required>
+        <input placeholder="Email Address" type="email" name="email" required>
+        <input placeholder="Phone Number" type="" name="phone">
+        <input placeholder="Street Address" type="text" name="address">
+        <input placeholder="City" type="text" name="city">
+        <select name="state">
         	<option value="" disabled selected>State</option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
@@ -69,16 +69,22 @@
             <option value="WI">Wisconsin</option>
             <option value="WY">Wyoming</option>
         </select>
-        <input placeholder="Zipcode" type="text" name="">
-        <input placeholder="Company Name" type="text" name="">
-        <select required>
+        <input placeholder="Zipcode" type="text" name="zip">
+        <input placeholder="Company Name" type="text" name="company">
+        <select name="position" required>
             <option value="" disabled selected>Position</option>
             <option value="user">Employee</option>
         </select>
-        <input placeholder="Choose your password" type="password" name="" required>
-        <input placeholder="Confirm password" type="password" name="" required>
+        <input placeholder="Choose your password" type="password" name="password" required>
+        <input placeholder="Confirm password" type="password" name="password2" required>
         <input type="submit">
     </form>
+
+
+    <!-- link to jquery -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <!-- link to app.js -->
+    <script type="text/javascript" src="app.js"></script>
 </body>
 
 </html>

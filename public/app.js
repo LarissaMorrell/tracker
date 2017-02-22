@@ -10,7 +10,15 @@ function renderPage(state, page) {
     window.location.href = page;
 }
 
+function retrieveStore() {
 
+}
+
+function addStore() {
+    var newStore = {
+
+    }
+}
 
 
 function addUser() {
@@ -19,20 +27,22 @@ function addUser() {
 
     if (pass1 == pass2) {
         var newUser = {
-                firstName: $("input[name*='first-name']").val(),
-                lastName: $("input[name*='last-name']").val(),
-                email: $("input[name*='email']").val(),
-                password: $("input[name*='password']").val(),
-                address: $("input[name*='address']").val(),
-                city: $("input[name*='city']").val(),
-                state: $("select[name*='state']").val(),
-                zip: $("input[name*='zip']").val(),
-                phone: $("input[name*='phone']").val(),
-                company: $("input[name*='company']").val(),
-                position: $("select[name*='position']").val(),
-                store_ids: [] //no stores when creating new account
-            }
-            //load all the data in newUser var and then post to API
+            "firstName": $("input[name*='firstName']").val(),
+            "lastName": $("input[name*='lastName']").val(),
+            "email": $("input[name*='email']").val(),
+            "password": $("input[name*='password']").val(),
+            "address": $("input[name*='address']").val(),
+            "city": $("input[name*='city']").val(),
+            "state": $("select[name*='state']").val(),
+            "zip": $("input[name*='zip']").val(),
+            "phone": $("input[name*='phone']").val(),
+            "company": $("input[name*='company']").val(),
+            "position": $("select[name*='position']").val(),
+            "store_ids": [] //no stores when creating new account
+        }
+        console.log(newUser);
+        //load all the data in newUser var and then post to API
+        postAjax(state, '/user', 'index.html', newUser);
         $("#js-newAccount-form").after("<p>it worked!!!!!!!!</p>");
 
     } else {
@@ -42,15 +52,18 @@ function addUser() {
 
 
 
-    renderPage(state, "index.html");
+    // renderPage(state, "index.html");
 }
 
 function postAjax(state, endpoint, page, dataObj) {
     var postObj = {
+        contentType: 'application/json',
         method: "POST",
         url: endpoint,
+        dataType: "json",
         data: dataObj
     }
+    console.log(dataObj);
     ajaxCall(postObj, page);
 }
 
@@ -76,8 +89,13 @@ function putAjax(state, endpoint, page, dataObj) { //endpoint must include id
     ajaxCall(putObj, page);
 }
 
-function deleteAjax(state) {
-
+function deleteAjax(state, endpoint, page, dataObj) { //endpoint must include id
+    var putObj = {
+        method: "DELETE",
+        url: endpoint,
+        data: dataObj
+    }
+    ajaxCall(putObj, page);
 }
 
 function ajaxCall(ajaxObj, page) {
@@ -134,6 +152,11 @@ function getAndDisplayStoreData() {
 
 //  on page load do this
 $(function() {
+    // $('.date-picker').val(new Date().toDateInputValue());
+    // document.getElementById('paperwork-received').value = new Date().toDateInputValue();
+    // document.getElementById('paperwork-received').valueAsDate = new Date();
+
+    //if the user-landing page is being loaded...
     getAndDisplayStoreData();
 
     $('#js-newAccount-form').submit(function(event) {
@@ -155,5 +178,6 @@ $(function() {
         addUser(state);
 
     }); // Create account form submission
+
 
 })

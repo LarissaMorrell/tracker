@@ -6,17 +6,15 @@
 </head>
 
 <body>
-    <p>Sign up for an account</p>
+    <p>Create a Store</p>
     <a href="index.html">Home</a>
-    <form id='js-newAccount-form'>
-        <input placeholder="First Name" type="text" name="firstName" required>
-        <input placeholder="Last Name" type="text" name="lastName" required>
-        <input placeholder="Email Address" type="email" name="email" required>
-        <input placeholder="Phone Number" type="" name="phone">
+    <form id='js-newStore-form'>
+        <input placeholder="Store Name" type="text" name="store-name" required>
+        <input placeholder="Store ID" type="text" name="store-id" required>
         <input placeholder="Street Address" type="text" name="address">
         <input placeholder="City" type="text" name="city">
         <select name="state">
-        	<option value="" disabled selected>State</option>
+            <option value="" disabled selected>State</option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
             <option value="AZ">Arizona</option>
@@ -69,18 +67,30 @@
             <option value="WI">Wisconsin</option>
             <option value="WY">Wyoming</option>
         </select>
-        <input placeholder="Zipcode" type="text" name="zip">
-        <input placeholder="Company Name" type="text" name="company">
-        <select name="position" required>
-            <option value="" disabled selected>Position</option>
-            <option value="user">Employee</option>
+        <input placeholder="General Comments" type="textarea" name="general-comments">
+        <select name="tier">
+            <option value="" disabled selected>Tier</option>
+            <option value="AL">Platinum</option>
+            <option value="AK">Gold</option>
+            <option value="AZ">Silver</option>
         </select>
-        <input placeholder="Choose your password" type="password" name="password" required>
-        <input placeholder="Confirm password" type="password" name="password2" required>
+        <!-- Rounded switch -->
+        <label class="switch">Store wants paperwork returned
+            <input type="checkbox">
+            <div class="slider round"></div>
+        </label>
+        <label class="switch">Paperwork has been received this quarter
+            <input type="checkbox">
+            <div class="slider round"></div>
+        </label>
+        <label class="switch">Paperwork needs to be returned
+            <input type="checkbox">
+            <div class="slider round"></div>
+        </label>
+        <label for="paperwork-received">Paperwork last redeemed: </label>
+        <input id="paperwork-received" class="date-picker" type="date" />
         <input type="submit">
     </form>
-
-
     <!-- link to jquery -->
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <!-- link to app.js -->

@@ -104,7 +104,7 @@ function ajaxCall(ajaxObj, page) {
 
         console.log('++++++++++++++++++++++++++++++++++++++');
         console.log("page in ajaxCall: " + page);
-        renderPage(page);
+        renderPage(state, page);
         return data;
     });
 }

@@ -40,14 +40,14 @@ function addUser() {
             "position": $("select[name*='position']").val(),
             "store_ids": [] //no stores when creating new account
         }
-        console.log(newUser);
+
         //load all the data in newUser var and then post to API
         postAjax(state, '/user', 'index.html', newUser);
         $("#js-newAccount-form").after("<p>it worked!!!!!!!!</p>");
 
     } else {
-        $("js-newAccount-form").append("< p >Your passwords do not match." +
-            "Please try again. < /p>");
+        $("js-newAccount-form").append("<p>Your passwords do not match." +
+            "Please try again. </p>");
     }
 
 
@@ -61,9 +61,9 @@ function postAjax(state, endpoint, page, dataObj) {
         method: "POST",
         url: endpoint,
         dataType: "json",
-        data: dataObj
+        data: JSON.stringify(dataObj)
     }
-    console.log(dataObj);
+    console.log("page in postAjax: " + page);
     ajaxCall(postObj, page);
 }
 
@@ -99,10 +99,13 @@ function deleteAjax(state, endpoint, page, dataObj) { //endpoint must include id
 }
 
 function ajaxCall(ajaxObj, page) {
-    $.ajax(ajaxObj).done(function() {
+    $.ajax(ajaxObj).done(function(data) {
+        //can do something to state depending on conditions of state... make changes depending
 
-        //can do something to state depeding on conditions of state... make cnages depending
+        console.log('++++++++++++++++++++++++++++++++++++++');
+        console.log("page in ajaxCall: " + page);
         renderPage(page);
+        return data;
     });
 }
 

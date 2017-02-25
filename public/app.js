@@ -10,18 +10,8 @@ function renderPage(state, page) {
     window.location.href = page;
 }
 
-function retrieveStore() {
 
-}
-
-function addStore() {
-    var newStore = {
-
-    }
-}
-
-
-function addUser() {
+function addUser(state) {
     var pass1 = $("input[name*='password']").val();
     var pass2 = $("input[name*='password2']").val();
 
@@ -49,10 +39,25 @@ function addUser() {
         $("js-newAccount-form").append("<p>Your passwords do not match." +
             "Please try again. </p>");
     }
+}
 
+function addStore(state) {
+    var newStore = {
+        "name": $("input[name*='store-name']").val(),
+        "user_assigned_ID": $("input[name*='store-id']").val(),
+        "address": $("input[name*='address']").val(),
+        "city": $("input[name*='city']").val(),
+        "state": $("select[name*='state']").val(),
+        "generalComments": $("input[name*='general-comments']").val(),
+        "tier": $("select[name*='tier']").val(),
+        "havePaperwork": $("input[name*='have-paperwork']").val(),
+        "wantsPaperworkBack": $("input[name*='wants-paperwork']").val(),
+        "lastRedeemed": $("#last-redeemed").val(),
+        "personnel": []
+    }
 
-
-    // renderPage(state, "index.html");
+    postAjax(state, '/store', 'index.html', newStore);
+    
 }
 
 function postAjax(state, endpoint, page, dataObj) {
@@ -70,14 +75,24 @@ function postAjax(state, endpoint, page, dataObj) {
 function getAjax(state, endpoint, page, dataObj = null) { //makes dataObj optional
     var getObj = {
         method: "GET",
-        url: endpoint
+        url: endpoint,
+        success: function(data) {
+            if (endpoint == '/user') {
+                cacheUser(data, dataObj);
+
+                //if no user, give invalid login message
+                if (Object.keys(state.user).length == 0) {
+                    $('#js-login-form').append('<p class="invalid-user">Email or password does not match. Try again.</p>');
+                }
+            }
+        }
     }
 
     if (dataObj != null) {
         getObj.data = dataObj;
     }
 
-    ajaxCall(postObj, page);
+    return ajaxCall(getObj, page);
 }
 
 function putAjax(state, endpoint, page, dataObj) { //endpoint must include id
@@ -99,34 +114,41 @@ function deleteAjax(state, endpoint, page, dataObj) { //endpoint must include id
 }
 
 function ajaxCall(ajaxObj, page) {
-    $.ajax(ajaxObj).done(function(data) {
+    $.ajax(ajaxObj).done(function() {
         //can do something to state depending on conditions of state... make changes depending
-
-        console.log('++++++++++++++++++++++++++++++++++++++');
-        console.log("page in ajaxCall: " + page);
-        renderPage(state, page);
-        return data;
+        if (page != null) {
+            renderPage(state, page);
+        }
     });
 }
 
 
 
-
-// this function's name and argument can stay the
-// same after we have a live API, but its internal
-// implementation will change. Instead of using a
-// timeout function that returns mock data, it will
-// use jQuery's AJAX functionality to make a call
-// to the server and then run the callbackFn
-function getUserLogin(callbackFn) {
-    // we use a `setTimeout` to make this asynchronous
-    // as it would be with a real AJAX call.
-
-
-    // setTimeout(function() { callbackFn(MOCK_USER_DATA) }, 1);
+function getUserLogin() {
+    var login = {
+        "email": $("input[name*='user-email']").val(),
+        "password": $("input[name*='user-password']").val()
+    }
+    getAjax(state, '/user', null, login);
 }
 
-
+function cacheUser(data, login) {
+    //for every user in array
+    for (var i = 0; i < data.length; i++) {
+        //if user the user email && passwords match
+        if (data[i].email == login.email &&
+            data[i].password == login.password) {
+            state.user = data[i];
+            //don't save password in state
+            for (var prop in data[i]) {
+                if (prop != 'password') {
+                    state.user[prop] = data[i][prop];
+                }
+            }
+            break;
+        }
+    }
+}
 
 
 
@@ -162,25 +184,17 @@ $(function() {
     //if the user-landing page is being loaded...
     getAndDisplayStoreData();
 
-    $('#js-newAccount-form').submit(function(event) {
-        event.preventDefault();
-        var userLogin = {
-                email: $("input[name*='user-email']").val(),
-                password: $("input[name*='user-password']").val()
-            }
-            //get user by email and then check that it matches password
-
-        //if it matches, switch pages to profile and generate the 
-        //user's stores using store_id
-    });
-
 
     //create a new account
     $('#js-newAccount-form').submit(function(event) {
         event.preventDefault();
         addUser(state);
+    });
 
-    }); // Create account form submission
-
-
+    $('#js-login-form').submit(function(event) {
+        event.preventDefault();
+        //if the user has already attempted to login
+        $('.invalid-user').remove();
+        getUserLogin();
+    });
 })

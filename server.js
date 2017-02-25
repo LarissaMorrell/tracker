@@ -68,7 +68,6 @@ app.get('/store/:id', (req, res) => {
 
 app.post('/user', (req, res) => {
     const requiredFields = ['firstName', 'lastName', 'email', 'password'];
-    console.log("request: " + req.body);
     for (let i = 0; i < requiredFields.length; i++) {
         const field = requiredFields[i];
         if (!(field in req.body)) {

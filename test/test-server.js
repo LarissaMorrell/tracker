@@ -41,30 +41,6 @@ describe('create account page', function() {
     });
 });
 
-describe('user landing page', function() {
-    it('exists', function(done) {
-        chai.request(app)
-            .get('/user-landing.html')
-            .end(function(err, res) {
-                res.should.have.status(200);
-                res.should.be.html;
-                done();
-            });
-    });
-});
-
-describe('profile page', function() {
-    it('exists', function(done) {
-        chai.request(app)
-            .get('/profile.html')
-            .end(function(err, res) {
-                res.should.have.status(200);
-                res.should.be.html;
-                done();
-            });
-    });
-});
-
 
 
 /*******************************************************

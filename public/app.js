@@ -44,7 +44,7 @@ function addUser(state) {
 function addStore(state) {
     var newStore = {
         "name": $("input[name*='store-name']").val(),
-        "user_assigned_ID": $("input[name*='store-id']").val(),
+        "user_assigned_id": $("input[name*='store-id']").val(),
         "address": $("input[name*='address']").val(),
         "city": $("input[name*='city']").val(),
         "state": $("select[name*='state']").val(),
@@ -57,7 +57,7 @@ function addStore(state) {
     }
 
     postAjax(state, '/store', 'index.html', newStore);
-    
+
 }
 
 function postAjax(state, endpoint, page, dataObj) {
@@ -83,6 +83,8 @@ function getAjax(state, endpoint, page, dataObj = null) { //makes dataObj option
                 //if no user, give invalid login message
                 if (Object.keys(state.user).length == 0) {
                     $('#js-login-form').append('<p class="invalid-user">Email or password does not match. Try again.</p>');
+                } else {
+                    $('#js-login-form').addClass('hide');
                 }
             }
         }
@@ -196,5 +198,10 @@ $(function() {
         //if the user has already attempted to login
         $('.invalid-user').remove();
         getUserLogin();
+    });
+
+    $('#js-newStore-form').submit(function(event) {
+        event.preventDefault();
+        addStore(state);
     });
 })

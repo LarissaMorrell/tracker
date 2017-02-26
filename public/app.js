@@ -56,9 +56,19 @@ function addStore(state) {
         "personnel": []
     }
 
-    postAjax(state, '/store', 'index.html', newStore);
+    //create a new store in the store database
+    postAjax(state, '/store', null, newStore);
+    //update the user database with the new store id
+    putAjax(state, '/user/' + state.user.id, null, 
+        { 'store_ids': state.user.store_ids, 'id': state.user.id });
 
 }
+
+
+
+
+
+
 
 function postAjax(state, endpoint, page, dataObj) {
     var postObj = {
@@ -66,11 +76,20 @@ function postAjax(state, endpoint, page, dataObj) {
         method: "POST",
         url: endpoint,
         dataType: "json",
-        data: JSON.stringify(dataObj)
+        data: JSON.stringify(dataObj),
+        success: function(data) {
+            if (endpoint == '/store') {
+                //take the id of this store and push to the user's store_ids[]
+                state.user.store_ids.push(data.id);
+            }
+        }
     }
     console.log("page in postAjax: " + page);
     ajaxCall(postObj, page);
 }
+
+
+
 
 function getAjax(state, endpoint, page, dataObj = null) { //makes dataObj optional
     var getObj = {
@@ -84,27 +103,36 @@ function getAjax(state, endpoint, page, dataObj = null) { //makes dataObj option
                 if (Object.keys(state.user).length == 0) {
                     $('#js-login-form').append('<p class="invalid-user">Email or password does not match. Try again.</p>');
                 } else {
+                    //Otherwise, log in the user by hiding login form 
+                    //and displaying the user's stores
                     $('#js-login-form').addClass('hide');
+                    getAndDisplayStoreData();
                 }
             }
         }
     }
-
     if (dataObj != null) {
         getObj.data = dataObj;
     }
-
     return ajaxCall(getObj, page);
 }
 
+
+
+
 function putAjax(state, endpoint, page, dataObj) { //endpoint must include id
     var putObj = {
-        method: "PUT",
+        type: "PUT",
         url: endpoint,
-        data: dataObj
+        contentType: 'application/json',
+        dataType: "json",
+        data: JSON.stringify(dataObj)
     }
     ajaxCall(putObj, page);
 }
+
+
+
 
 function deleteAjax(state, endpoint, page, dataObj) { //endpoint must include id
     var putObj = {
@@ -115,14 +143,25 @@ function deleteAjax(state, endpoint, page, dataObj) { //endpoint must include id
     ajaxCall(putObj, page);
 }
 
+
+
+
 function ajaxCall(ajaxObj, page) {
     $.ajax(ajaxObj).done(function() {
-        //can do something to state depending on conditions of state... make changes depending
+        //can do something to state depending on conditions
         if (page != null) {
             renderPage(state, page);
         }
     });
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -154,10 +193,10 @@ function cacheUser(data, login) {
 
 
 
-function getStores(callbackFn) {
-    // we use a `setTimeout` to make this asynchronous
-    // as it would be with a real AJAX call.
-    // setTimeout(function() { callbackFn(MOCK_USER_DATA) }, 1);
+function generateStores() {
+
+
+
 }
 
 
@@ -174,7 +213,11 @@ function displayStores(data) {
 // this function can stay the same even when we
 // are connecting to real API
 function getAndDisplayStoreData() {
-    getStores(displayStores);
+
+    //give user button for adding a store
+    $('#add-store-button').removeClass('hide');
+
+    generateStores();
 }
 
 //  on page load do this
@@ -183,9 +226,6 @@ $(function() {
     // document.getElementById('paperwork-received').value = new Date().toDateInputValue();
     // document.getElementById('paperwork-received').valueAsDate = new Date();
 
-    //if the user-landing page is being loaded...
-    getAndDisplayStoreData();
-
 
     //create a new account
     $('#js-newAccount-form').submit(function(event) {
@@ -193,6 +233,7 @@ $(function() {
         addUser(state);
     });
 
+    //login to account
     $('#js-login-form').submit(function(event) {
         event.preventDefault();
         //if the user has already attempted to login
@@ -200,8 +241,17 @@ $(function() {
         getUserLogin();
     });
 
+    //open up new store form
+    $('#add-store-button').on('click', function(event) {
+        event.preventDefault();
+        $('.create-store').removeClass('hide');
+    });
+
+    //create a store
     $('#js-newStore-form').submit(function(event) {
         event.preventDefault();
         addStore(state);
+        $('.create-store').addClass('hide');
+        document.getElementById("js-newStore-form").reset();
     });
 })

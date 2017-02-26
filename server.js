@@ -142,6 +142,7 @@ app.put('/user/:id', (req, res) => {
         const message = (
             `Request path id (${req.params.id}) and request body id ` +
             `(${req.body.id}) must match`);
+        console.log(req.body);
         console.error(message);
         res.status(400).json({ message: message });
     }

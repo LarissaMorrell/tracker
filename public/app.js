@@ -58,9 +58,7 @@ function addStore(state) {
 
     //create a new store in the store database
     postAjax(state, '/store', null, newStore);
-    //update the user database with the new store id
-    putAjax(state, '/user/' + state.user.id, null, 
-        { 'store_ids': state.user.store_ids, 'id': state.user.id });
+
 
 }
 
@@ -81,6 +79,9 @@ function postAjax(state, endpoint, page, dataObj) {
             if (endpoint == '/store') {
                 //take the id of this store and push to the user's store_ids[]
                 state.user.store_ids.push(data.id);
+
+                //update the user database with the new store id
+                putAjax(state, '/user/' + state.user.id, null, { 'store_ids': state.user.store_ids, 'id': state.user.id });
             }
         }
     }

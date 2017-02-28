@@ -79,13 +79,15 @@ function postAjax(state, endpoint, page, dataObj) {
             if (endpoint == '/store') {
                 //take the id of this store and push to the user's store_ids[]
                 state.user.store_ids.push(data.id);
+                state.userStores.push(data);
 
                 //update the user database with the new store id
                 putAjax(state, '/user/' + state.user.id, null, { 'store_ids': state.user.store_ids, 'id': state.user.id });
+
+                displayStores(state);
             }
         }
     }
-    console.log("page in postAjax: " + page);
     ajaxCall(postObj, page);
 }
 
@@ -98,6 +100,8 @@ function getAjax(state, endpoint, page, dataObj = null) { //makes dataObj option
         url: endpoint,
         success: function(data) {
             if (endpoint == '/user') {
+
+                //if username/password matches, add it to our state
                 cacheUser(data, dataObj);
 
                 //if no user, give invalid login message
@@ -110,6 +114,20 @@ function getAjax(state, endpoint, page, dataObj = null) { //makes dataObj option
                     getAndDisplayStoreData();
                 }
             }
+
+            var endArr = endpoint.split('/'); //[0] will be empty string
+
+            //if the endpoint starts with 'store' and suceeded by a string (id)
+            if (endArr[1] == 'store' && endArr.length == 3) {
+                state.userStores.push(data);
+
+                //if the last store has been loaded into userStores[]
+                if (state.userStores.length == state.user.store_ids.length) {
+
+                    displayStores(state);
+                }
+            }
+
         }
     }
     if (dataObj != null) {
@@ -174,6 +192,9 @@ function getUserLogin() {
     getAjax(state, '/user', null, login);
 }
 
+
+//When the email/password matches a user in the database
+//add it to our state
 function cacheUser(data, login) {
     //for every user in array
     for (var i = 0; i < data.length; i++) {
@@ -194,31 +215,41 @@ function cacheUser(data, login) {
 
 
 
-function generateStores() {
 
 
 
-}
 
 
-// this function stays the same when we connect
-// to real API later
-function displayStores(data) {
-    var stores = data.users[0].stores;
-    for (index in stores) {
-        $('body').append(
-            '<p>' + stores[index].name + '</p>');
+
+function displayStores(state) {
+    $('.store-list').empty();
+
+    var stores = state.userStores;
+    for (i in stores) {
+        $('.store-list').append(
+            '<div><ul><li>' + stores[i].name + '</li><li>' +
+            stores[i].address + ', ' +
+            stores[i].city + ', ' +
+            stores[i].state + '</li></ul></div>');
     }
+
 }
 
-// this function can stay the same even when we
-// are connecting to real API
+
+
+
 function getAndDisplayStoreData() {
 
     //give user button for adding a store
     $('#add-store-button').removeClass('hide');
 
-    generateStores();
+    //create the userStore[] from store_ids[]
+    for (var i = 0; i < state.user.store_ids.length; i++) {
+        getAjax(state, '/store/' + state.user.store_ids[i], null);
+    }
+
+
+
 }
 
 //  on page load do this

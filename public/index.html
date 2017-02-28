@@ -30,10 +30,10 @@
             <p>Create a Store</p>
             <form id='js-newStore-form'>
                 <input placeholder="Store Name" type="text" name="store-name" required>
-                <input placeholder="Store ID" type="text" name="store-id" required>
-                <input placeholder="Street Address" type="text" name="address">
-                <input placeholder="City" type="text" name="city">
-                <select name="state">
+                <input placeholder="Store ID" type="text" name="store-id">
+                <input placeholder="Street Address" type="text" name="address" required>
+                <input placeholder="City" type="text" name="city" required>
+                <select name="state" required>
                     <option value="" disabled selected>State</option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
@@ -109,6 +109,9 @@
             </form>
         </div>
     </section>
+    <section class="store-list">
+    </section>
+    </body>
     <!-- link to jquery -->
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <!-- link to app.js -->

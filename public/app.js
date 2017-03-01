@@ -227,15 +227,31 @@ function displayStores(state) {
     var stores = state.userStores;
     for (i in stores) {
         $('.store-list').append(
-            '<div class="store-result"><ul><li>' + stores[i].name + '</li><li>' +
+            '<div class="store-result"><ul>' + 
+            '<div class="store-location-result"><li>' +
+            '<h2 class="store-name">' + stores[i].name + '</h1>' +
             stores[i].address + ', ' +
             stores[i].city + ', ' +
-            stores[i].state + '</li></ul></div>');
+            stores[i].state + '</div></li>' + 
+            '<div class="paperwork-received"><li>' + '</li>' + //paperwork received
+            '<div class="tier-result"><li>' + getTierMedal(state, i) + '</li></div>' +//tier
+            '</ul></div>');
     }
 
 }
 
+function getTierMedal(state, index) {
 
+    if(state.userStores[index].tier == 'platinum'){
+        return '<img src="medal-platinum.png" width=60px>';
+    } else if(state.userStores[index].tier == 'gold') {
+        return '<img src="medal-gold.png" width=60px>';
+    } else if(state.userStores[index].tier == 'silver') {
+        return '<img src="medal-silver.png" width=60px>'
+    } else {
+        return '<p>No Tier</p>';
+    }
+}
 
 
 function getAndDisplayStoreData() {
@@ -265,6 +281,8 @@ $(function() {
         addUser(state);
     });
 
+
+
     //login to account
     $('#js-login-form').submit(function(event) {
         event.preventDefault();
@@ -273,12 +291,15 @@ $(function() {
         getUserLogin();
     });
 
+
+
     //open up new store form
     $('#add-store-button').on('click', function(event) {
         event.preventDefault();
         $('.create-store').removeClass('hide');
         $(this).addClass('hide');
     });
+
 
     //create a store
     $('#js-newStore-form').submit(function(event) {
@@ -289,11 +310,12 @@ $(function() {
         $('#add-store-button').removeClass('hide');
     });
 
+
+    //cancel creating a new store
     $('.cxl-button').on('click', function(event) {
         event.preventDefault();
         $('.create-store').addClass('hide');
         document.getElementById("js-newStore-form").reset();
-
         $('#add-store-button').removeClass('hide');
     });
 })

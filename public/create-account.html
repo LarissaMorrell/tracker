@@ -3,10 +3,10 @@
 
 <head>
     <title></title>
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 
 <body>
-
     <p>Sign up for an account</p>
     <a href="index.html">Home</a>
     <form id='js-newAccount-form'>
@@ -17,7 +17,7 @@
         <input placeholder="Street Address" type="text" name="address">
         <input placeholder="City" type="text" name="city">
         <select name="state">
-        	<option value="" disabled selected>State</option>
+            <option value="" disabled selected>State</option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
             <option value="AZ">Arizona</option>
@@ -78,10 +78,11 @@
         </select>
         <input placeholder="Choose your password" type="password" name="password" required>
         <input placeholder="Confirm password" type="password" name="password2" required>
-        <input type="submit">
+        <div class="create-store-buttons">
+            <input type="submit">
+            <button class='cxl-button' type='button'>Cancel</button>
+        </div>
     </form>
-
-
     <!-- link to jquery -->
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <!-- link to app.js -->

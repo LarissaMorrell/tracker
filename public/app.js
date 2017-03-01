@@ -227,7 +227,7 @@ function displayStores(state) {
     var stores = state.userStores;
     for (i in stores) {
         $('.store-list').append(
-            '<div><ul><li>' + stores[i].name + '</li><li>' +
+            '<div class="store-result"><ul><li>' + stores[i].name + '</li><li>' +
             stores[i].address + ', ' +
             stores[i].city + ', ' +
             stores[i].state + '</li></ul></div>');
@@ -277,6 +277,7 @@ $(function() {
     $('#add-store-button').on('click', function(event) {
         event.preventDefault();
         $('.create-store').removeClass('hide');
+        $(this).addClass('hide');
     });
 
     //create a store
@@ -285,5 +286,14 @@ $(function() {
         addStore(state);
         $('.create-store').addClass('hide');
         document.getElementById("js-newStore-form").reset();
+        $('#add-store-button').removeClass('hide');
+    });
+
+    $('.cxl-button').on('click', function(event) {
+        event.preventDefault();
+        $('.create-store').addClass('hide');
+        document.getElementById("js-newStore-form").reset();
+
+        $('#add-store-button').removeClass('hide');
     });
 })

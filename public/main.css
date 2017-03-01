@@ -29,3 +29,15 @@ input[type=textarea] {
 input[type=textarea] {
 	height: 100px;
 }
+
+#store-modal {
+	display: none;
+}
+
+.store-result {
+	border-radius: 10px;
+	border: solid black 1px;
+	padding: 8px;
+	margin: 15px 10% 15px 10%;
+	background-color: #ADD8E6; /* light blue */
+}

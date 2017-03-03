@@ -232,41 +232,78 @@ function getDateString(dateStr) {
 
 
 
-function displayStores(state) {
-    $('.store-list').empty();
+// function displayStores(state) {
+//     $('.store-list').empty();
 
+//     var stores = state.userStores;
+
+
+//     for (i in stores) {
+//         var storeResultDiv = $('<div>').addClass('store-result');
+//         var storeResultList = $('<ul>');
+//         console.log(stores[i]. lastRedeemed);
+//         storeResultList.append(
+//             '<li>' +
+//             '<h2 class="store-name">' + stores[i].name + '</h2>' +
+//             stores[i].address + ', ' +
+//             stores[i].city + ', ' +
+//             stores[i].state + '</li>' +
+//             '<li>' + stores[i].havePaperwork + '</li>' + //paperwork received
+//             '<li>' + getTierMedal(state, i) + '</li>' + //tier
+//             '<li>' + getDateString(stores[i].lastRedeemed) + '</li>');
+//         storeResultDiv.append(storeResultList);
+//         $('.store-list').append(storeResultDiv);
+//     }
+// }
+
+/**<div class="span3">
+            <div class="services-box">
+              <div class="services-round"><a href="#" class="sprite-3"><i class="fa fa-cog"></i></a></div>
+              <h3>Waste Management</h3>
+              <strong class="title-text">Maecenas a lectus urn </strong>
+              <p>There are many variations of passages of Lorem Ipsum available, but the majority </p>
+              <a href="how-we-work.html" class="readmore">Read More<i class="fa fa-arrow-right"></i></a> </div>
+          </div>**/
+
+
+
+function displayStores(state) {
+
+    $('.store-list').empty();
     var stores = state.userStores;
 
-
     for (i in stores) {
-        var storeResultDiv = $('<div>').addClass('store-result');
-        var storeResultList = $('<ul>');
-        console.log(stores[i]. lastRedeemed);
-        storeResultList.append(
-            '<li>' +
-            '<h2 class="store-name">' + stores[i].name + '</h2>' +
-            stores[i].address + ', ' +
-            stores[i].city + ', ' +
-            stores[i].state + '</li>' +
-            '<li>' + stores[i].havePaperwork + '</li>' + //paperwork received
-            '<li>' + getTierMedal(state, i) + '</li>' + //tier
-            '<li>' + getDateString(stores[i].lastRedeemed) + '</li>');
-        storeResultDiv.append(storeResultList);
-        $('.store-list').append(storeResultDiv);
-    }
+        var resultBoxDiv = $('<div>').addClass('store-result-box');
+        var tierRound = $('<div>').addClass('tier-round');
+        tierRound.append(getTierMedal(state, i));
 
+        //add the medal img to the result box
+        // resultBoxDiv.append('<span class=tier-circle>' + tierRound + '</span>');
+        resultBoxDiv.append(tierRound);
+
+        //add the store name to the result box
+        resultBoxDiv.append('<h3>' + stores[i].name + '</h3>');
+
+        //add the store address
+        resultBoxDiv.append('<p>' + stores[i].address + '<br>' +
+            stores[i].city + ', ' + stores[i].state + '</p>');
+
+        $('.store-list').append(resultBoxDiv);
+    }
 }
+
+
 
 function getTierMedal(state, index) {
 
     if (state.userStores[index].tier == 'platinum') {
-        return '<img src="medal-platinum.png" width=60px>';
+        return '<img src="medal-platinum.png">';
     } else if (state.userStores[index].tier == 'gold') {
-        return '<img src="medal-gold.png" width=60px>';
+        return '<img src="medal-gold.png">';
     } else if (state.userStores[index].tier == 'silver') {
-        return '<img src="medal-silver.png" width=60px>'
+        return '<img src="medal-silver.png">'
     } else {
-        return '<p>No Tier</p>';
+        return '<img src=#>';
     }
 }
 

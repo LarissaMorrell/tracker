@@ -11,17 +11,19 @@
 </head>
 
 <body>
-    <p>Hello World! Home Page</p>
-    <ul>
-        <li><a href="/create-account.html">Create Account</a></li>
-    </ul>
+    <header class="navbar hide">
+        <ul>
+            <li><h1>Market Tracker</h1></li>
+            <li><</li>
+        </ul>
+    </header>
     <section class="user-login">
+        <h1>Market Tracker</h1>
         <form id='js-login-form'>
-            <label>Username</label>
-            <input type="email" name="user-email" placeholder="email@company.com" required>
-            <label>Password</label>
-            <input type="password" name="user-password" required>
+            <input type="email" name="user-email" placeholder="Email" required>
+            <input type="password" name="user-password" placeholder="Password" required>
             <input type="submit">
+            <a href="/create-account.html">Create Account</a>
         </form>
     </section>
     <a href="#0" id="add-store-button" class="hide">Add Store</a>

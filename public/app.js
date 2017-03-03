@@ -110,7 +110,7 @@ function getAjax(state, endpoint, page, dataObj = null) { //makes dataObj option
                 } else {
                     //Otherwise, log in the user by hiding login form 
                     //and displaying the user's stores
-                    $('#js-login-form').addClass('hide');
+                    $('.user-login').addClass('hide');
                     getAndDisplayStoreData();
                 }
             }
@@ -214,7 +214,18 @@ function cacheUser(data, login) {
 }
 
 
+function getDateString(dateStr) {
+    var month = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
 
+    var date = new Date(dateStr);
+    console.log("dateStr: " + typeof datestr);
+    console.log("fullDate: " + month[date.getMonth() - 1]);
+    console.log("month: " + date.getMonth());
+
+    return month[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+}
 
 
 
@@ -225,28 +236,34 @@ function displayStores(state) {
     $('.store-list').empty();
 
     var stores = state.userStores;
+
+
     for (i in stores) {
-        $('.store-list').append(
-            '<div class="store-result"><ul>' + 
-            '<div class="store-location-result"><li>' +
-            '<h2 class="store-name">' + stores[i].name + '</h1>' +
+        var storeResultDiv = $('<div>').addClass('store-result');
+        var storeResultList = $('<ul>');
+        console.log(stores[i]. lastRedeemed);
+        storeResultList.append(
+            '<li>' +
+            '<h2 class="store-name">' + stores[i].name + '</h2>' +
             stores[i].address + ', ' +
             stores[i].city + ', ' +
-            stores[i].state + '</div></li>' + 
-            '<div class="paperwork-received"><li>' + '</li>' + //paperwork received
-            '<div class="tier-result"><li>' + getTierMedal(state, i) + '</li></div>' +//tier
-            '</ul></div>');
+            stores[i].state + '</li>' +
+            '<li>' + stores[i].havePaperwork + '</li>' + //paperwork received
+            '<li>' + getTierMedal(state, i) + '</li>' + //tier
+            '<li>' + getDateString(stores[i].lastRedeemed) + '</li>');
+        storeResultDiv.append(storeResultList);
+        $('.store-list').append(storeResultDiv);
     }
 
 }
 
 function getTierMedal(state, index) {
 
-    if(state.userStores[index].tier == 'platinum'){
+    if (state.userStores[index].tier == 'platinum') {
         return '<img src="medal-platinum.png" width=60px>';
-    } else if(state.userStores[index].tier == 'gold') {
+    } else if (state.userStores[index].tier == 'gold') {
         return '<img src="medal-gold.png" width=60px>';
-    } else if(state.userStores[index].tier == 'silver') {
+    } else if (state.userStores[index].tier == 'silver') {
         return '<img src="medal-silver.png" width=60px>'
     } else {
         return '<p>No Tier</p>';
@@ -317,5 +334,16 @@ $(function() {
         $('.create-store').addClass('hide');
         document.getElementById("js-newStore-form").reset();
         $('#add-store-button').removeClass('hide');
+    });
+
+    //click on a store result for more details
+    $(document).on('click', '.store-result', function(event) {
+
+        $(this).addClass('details');
+
+    });
+
+    $(document).on('click', '.details', function(event) {
+        $(this).removeClass('details');
     });
 })

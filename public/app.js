@@ -107,13 +107,18 @@ function getAjax(state, endpoint, page, dataObj = null) { //makes dataObj option
                 //if no user, give invalid login message
                 if (Object.keys(state.user).length == 0) {
                     $('#js-login-form').append('<p class="invalid-user">Email or password does not match. Try again.</p>');
-                } else {
-                    //Otherwise, log in the user by hiding login form 
-                    //and displaying the user's stores
+
+
+                } else { //login successful
+
+                    // hide the login form
                     $('.user-login').addClass('hide');
+
                     getAndDisplayStoreData();
                 }
             }
+
+
 
             var endArr = endpoint.split('/'); //[0] will be empty string
 
@@ -186,9 +191,10 @@ function ajaxCall(ajaxObj, page) {
 
 function getUserLogin() {
     var login = {
-        "email": $("input[name*='user-email']").val(),
-        "password": $("input[name*='user-password']").val()
-    }
+            "email": $("input[name*='user-email']").val(),
+            "password": $("input[name*='user-password']").val()
+        }
+        //find out if there is a existing user, and if there is log in
     getAjax(state, '/user', null, login);
 }
 
@@ -297,13 +303,13 @@ function displayStores(state) {
 function getTierMedal(state, index) {
 
     if (state.userStores[index].tier == 'platinum') {
-        return '<img src="medal-platinum.png">';
+        return '<img class="tier-medal" src="medal-platinum.png" alt="platinum">';
     } else if (state.userStores[index].tier == 'gold') {
-        return '<img src="medal-gold.png">';
+        return '<img class="tier-medal" src="medal-gold.png" alt="gold">';
     } else if (state.userStores[index].tier == 'silver') {
-        return '<img src="medal-silver.png">'
+        return '<img class="tier-medal" src="medal-silver.png" alt="silver">'
     } else {
-        return '<img src=#>';
+        return '';
     }
 }
 
@@ -312,13 +318,13 @@ function getAndDisplayStoreData() {
 
     //give user button for adding a store
     $('#add-store-button').removeClass('hide');
+    //show the store results
+    $('.store-list').removeClass('hide');
 
     //create the userStore[] from store_ids[]
     for (var i = 0; i < state.user.store_ids.length; i++) {
         getAjax(state, '/store/' + state.user.store_ids[i], null);
     }
-
-
 
 }
 
@@ -350,6 +356,10 @@ $(function() {
     //open up new store form
     $('#add-store-button').on('click', function(event) {
         event.preventDefault();
+        document.getElementById("js-newStore-form").reset();
+
+        //hide store-results and then show create-store form
+        $('.store-list').addClass('hide');
         $('.create-store').removeClass('hide');
         $(this).addClass('hide');
     });
@@ -359,25 +369,30 @@ $(function() {
     $('#js-newStore-form').submit(function(event) {
         event.preventDefault();
         addStore(state);
+
+
+        //hide creating a store
         $('.create-store').addClass('hide');
-        document.getElementById("js-newStore-form").reset();
+        //show add-store button and store results list
         $('#add-store-button').removeClass('hide');
+        $('.store-list').removeClass('hide');
     });
 
 
     //cancel creating a new store
     $('.cxl-button').on('click', function(event) {
         event.preventDefault();
+
+        //hide creating a store
         $('.create-store').addClass('hide');
-        document.getElementById("js-newStore-form").reset();
+        //show add-store button and store results list
         $('#add-store-button').removeClass('hide');
+        $('.store-list').removeClass('hide');
     });
 
     //click on a store result for more details
     $(document).on('click', '.store-result', function(event) {
-
         $(this).addClass('details');
-
     });
 
     $(document).on('click', '.details', function(event) {

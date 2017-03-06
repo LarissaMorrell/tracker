@@ -24,7 +24,14 @@ body {
 /* Contains the form that enables user to log in */
 
 .user-login {
-    margin: 25% 35% 0 35%;
+    /*margin: 25% 35% 0 35%;*/
+    margin: auto;
+    /*position: absolute;*/
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 500px;
     text-align: center;
     background-color: red;
 }
@@ -43,9 +50,9 @@ h1 {
 .new-account {
     margin: 15px 10% 10px 10%;
     padding: 5%;
-    background: #D3D3D3;
-    /* light gray */
-    border-radius: 5px;
+    background-color: rgb(245,245,245); /* light gray */
+    border: 6px ridge rgb(220,220,220); /* medium gray */
+    border-radius: 10px;
 }
 
 input[type=text],
@@ -55,7 +62,7 @@ input[type=email] {
     border: 1px solid #D3D3D3;
     /* gray */
     border-radius: 3px;
-    width: 100%;
+    /*width: 100%;*/
     padding: 5px;
     margin: 5px;
     height: 25px;
@@ -63,17 +70,6 @@ input[type=email] {
 
 input[type=textarea] {
     height: 100px;
-}
-
-.store-result {
-    /*border-radius: 10px;*/
-    border: solid black 1px;
-    padding: 10px 8% 10px 8%;
-    /*margin: 15px 10% 15px 10%;*/
-    background-color: yellow;
-    /*background-color: #ADD8E6;*/
-    /* light blue */
-    width: 100%;
 }
 
 .details {
@@ -107,41 +103,24 @@ input[type=submit]:hover {
 }
 
 
-/*li {
-    border: 1px solid black;
-    display: block;
-    list-style-type: none;
-    padding-right: 20px;
-}*/
-
-
-/** templating attempt **/
-
-.store-list {
-    margin: 75px 10% 75px 10%;
-    /*background-color: rgba(255, 255, 255, 0.8);*/
-    background-color: blue;
-}
-
-
-/** templating attempt **/
-
 .store-result-box {
     position: relative;
-    background-color: white;
-    border: 6px ridge gray;
+    background-color: rgb(245,245,245); /* light gray */
+    border: 6px ridge rgb(220,220,220); /* medium gray */
     border-radius: 10px;
     margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 4px 100px 4px 25px;
     /* padding right for tier medal*/
-    height: 88px;
+    height: 83px;
+    max-width: 550px;
 }
 
 .store-result-box h3 {
     font-size: 20px;
     margin-top: 10px;
-    margin-bottom: 10px;
-    /*max-height: 20px;*/
+    margin-bottom: 5px;
     max-width: 90%;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -162,8 +141,8 @@ input[type=submit]:hover {
     width: 85px;
     height: 85px;
     border-radius: 50%;
-    border: 6px ridge gray;
-    background-color: white;
+    border: 3px solid rgb(200,200,200); /* medium gray */
+    background-color: rgb(245,245,245); /* light gray */
 }
 
 

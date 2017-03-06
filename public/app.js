@@ -238,41 +238,6 @@ function getDateString(dateStr) {
 
 
 
-// function displayStores(state) {
-//     $('.store-list').empty();
-
-//     var stores = state.userStores;
-
-
-//     for (i in stores) {
-//         var storeResultDiv = $('<div>').addClass('store-result');
-//         var storeResultList = $('<ul>');
-//         console.log(stores[i]. lastRedeemed);
-//         storeResultList.append(
-//             '<li>' +
-//             '<h2 class="store-name">' + stores[i].name + '</h2>' +
-//             stores[i].address + ', ' +
-//             stores[i].city + ', ' +
-//             stores[i].state + '</li>' +
-//             '<li>' + stores[i].havePaperwork + '</li>' + //paperwork received
-//             '<li>' + getTierMedal(state, i) + '</li>' + //tier
-//             '<li>' + getDateString(stores[i].lastRedeemed) + '</li>');
-//         storeResultDiv.append(storeResultList);
-//         $('.store-list').append(storeResultDiv);
-//     }
-// }
-
-/**<div class="span3">
-            <div class="services-box">
-              <div class="services-round"><a href="#" class="sprite-3"><i class="fa fa-cog"></i></a></div>
-              <h3>Waste Management</h3>
-              <strong class="title-text">Maecenas a lectus urn </strong>
-              <p>There are many variations of passages of Lorem Ipsum available, but the majority </p>
-              <a href="how-we-work.html" class="readmore">Read More<i class="fa fa-arrow-right"></i></a> </div>
-          </div>**/
-
-
-
 function displayStores(state) {
 
     $('.store-list').empty();
@@ -391,7 +356,7 @@ $(function() {
     });
 
     //click on a store result for more details
-    $(document).on('click', '.store-result', function(event) {
+    $(document).on('click', '.store-result-box', function(event) {
         $(this).addClass('details');
     });
 

@@ -3,18 +3,21 @@
     font-size: 15px;
 }
 
+html {
+    height: 100%;
+}
+
 body {
-    /*background-image: url(shopping-cart.jpg);*/
+    background-image: url(storefront.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: left;
     background-attachment: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     /* Preserve aspect ratio */
     min-width: 100%;
     min-height: 100%;
-    background-color: blue;
 }
 
 .hide {
@@ -24,70 +27,42 @@ body {
 
 /* Contains the form that enables user to log in */
 
+.user-login,
+.new-account,
+.new-store {
+    height: 100vh;
+    width: 50%;
+    float: right;
+    background: #becccc;
+}
+
 .user-login {
-    /*margin: 25% 35% 0 35%;*/
-    margin: auto;
-    /*position: absolute;*/
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    max-width: 500px;
     text-align: center;
-    background-color: red;
+}
+
+.new-account,
+.new-store {
+    padding: 5%;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.landing-option {
+    font-size: 20px;
+    font-family: 'Roboto', Arial, sans-serif;
+    color: white;
+    text-decoration: none;
+    margin: 20px;
+    display: block;
 }
 
 
 /* Title on landing */
 
-
-/*h1 {
-    color: #fff;
-    font-weight: bold;
-    font-family: Helvetica;
-    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15);
-    font-size: 40px;
-}*/
-
 h1 {
-    position: absolute;
-    top: 35%;
-    width: 100%;
-    text-shadow: 0 1px 0 hsl(174, 5%, 80%), 
-        0 2px 0 hsl(174, 5%, 75%), 
-        0 3px 0 hsl(174, 5%, 70%), 
-        0 4px 0 hsl(174, 5%, 66%), 
-        0 5px 0 hsl(174, 5%, 64%), 
-        0 6px 0 hsl(174, 5%, 62%), 
-        0 7px 0 hsl(174, 5%, 61%), 
-        0 8px 0 hsl(174, 5%, 60%), 
-        0 0 5px rgba(0, 0, 0, .05), 
-        0 1px 3px rgba(0, 0, 0, .2), 
-        0 3px 5px rgba(0, 0, 0, .2), 
-        0 5px 10px rgba(0, 0, 0, .2), 
-        0 10px 10px rgba(0, 0, 0, .2), 
-        0 20px 20px rgba(0, 0, 0, .3);
-    font: 900 120px/1 'Source Sans Pro', Arial, sans-serif;
-    /*background: #becccc;*/
-    /*text-transform: uppercase;*/
-    color: #fff;
-    text-align: center;
-    letter-spacing: -3px;
-    padding-top: 10%;
-}
-
-
-/* Contains the forms for creating stores/accounts */
-
-.new-store,
-.new-account {
-    margin: 15px 10% 10px 10%;
-    padding: 5%;
-    background-color: rgb(245, 245, 245);
-    /* light gray */
-    border: 6px ridge rgb(220, 220, 220);
-    /* medium gray */
-    border-radius: 10px;
+    font-size: 75px;
+    font-family: 'Righteous', Arial, sans-serif;
+    color: white;
 }
 
 input[type=text],
@@ -194,9 +169,4 @@ img {
     position: relative;
     top: 5px;
     left: 0px;
-}
-
-#add-store-button {
-    width: 40px;
-    height: 40px;
 }

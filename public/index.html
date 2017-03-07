@@ -17,23 +17,24 @@
     <!-- box shadow -->
     <link href='http://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="box-shadow.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet"> <!-- Headings -->
 </head>
 
 <body>
     <div class="user-login">
         <h1>Market Tracker</h1>
-        <!-- <h1 data-shadow='Market'>Market</h1> -->
-        <!-- <h1 data-shadow='Tracker'>Tracker</h1> -->
-        <form id='js-login-form'>
+        <a class="landing-option" href="/create-account.html">Create Account</a>
+        <a id="sign-in" class="landing-option" href="#0">Sign In</a>
+        <form id='js-login-form' class='hide'>
             <input type="email" name="user-email" placeholder="Email" required>
             <input type="password" name="user-password" placeholder="Password" required>
             <input type="submit">
-            <a href="/create-account.html">Create Account</a>
         </form>
     </div>
     <!-- <a href="#0" id="add-store-button" class="hide">Add Store</a> -->
     <!-- <img id="add-store-button" class="hide" src="add-store-icon.png"> -->
-    <i id="add-store-button" class="material-icons hide">add</i>
+    <i id="add-store-button" class="hide">add</i>
     <section class="create-store hide">
         <div class='new-store'>
             <p>Create a Store</p>
@@ -116,7 +117,7 @@
                 <input id="last-redeemed" class="date-picker" type="date" />
                 <div class="create-store-buttons">
                     <input type="submit">
-                    <button class='cxl-button' type='button'>Cancel</button>
+                    <button id="#cxl-create-store" class='cxl-button' type='button'>Cancel</button>
                 </div>
             </form>
         </div>

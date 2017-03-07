@@ -283,6 +283,7 @@ function getAndDisplayStoreData() {
 
     //give user button for adding a store
     $('#add-store-button').removeClass('hide');
+    $('#add-store-button').addClass('material-icons');
     //show the store results
     $('.store-list').removeClass('hide');
 
@@ -299,6 +300,11 @@ $(function() {
     // document.getElementById('paperwork-received').value = new Date().toDateInputValue();
     // document.getElementById('paperwork-received').valueAsDate = new Date();
 
+    //allow user to enter username/password
+    $('#sign-in').on('click', function(event) {
+        event.preventDefault();
+        $('#js-login-form').removeClass('hide');
+    });
 
     //create a new account
     $('#js-newAccount-form').submit(function(event) {
@@ -323,6 +329,9 @@ $(function() {
         event.preventDefault();
         document.getElementById("js-newStore-form").reset();
 
+        //hide create-store button
+        $('#add-store-button').addClass('hide');
+        $('#add-store-button').removeClass('material-icons');
         //hide store-results and then show create-store form
         $('.store-list').addClass('hide');
         $('.create-store').removeClass('hide');
@@ -335,24 +344,32 @@ $(function() {
         event.preventDefault();
         addStore(state);
 
-
-        //hide creating a store
+        //hide creating a store form
         $('.create-store').addClass('hide');
-        //show add-store button and store results list
+        //show add-store button and store results list. Add styling to button.
         $('#add-store-button').removeClass('hide');
+        $('#add-store-button').addClass('material-icons');
         $('.store-list').removeClass('hide');
     });
 
 
     //cancel creating a new store
-    $('.cxl-button').on('click', function(event) {
+    $('#cxl-create-store').on('click', function(event) {
         event.preventDefault();
 
         //hide creating a store
         $('.create-store').addClass('hide');
-        //show add-store button and store results list
+        //show add-store button and store results list (add class for button styling)
         $('#add-store-button').removeClass('hide');
+        $('#add-store-button').addClass('material-icons');
         $('.store-list').removeClass('hide');
+    });
+
+    //cancel creating a new account
+    $('#cxl-createaccount').on('click', function(event){
+        event.preventDefault();
+
+        window.location.href = '/index.html';
     });
 
     //click on a store result for more details

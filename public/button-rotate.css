@@ -56,28 +56,28 @@ i.material-icons:hover:after {
 
 
 
-i.material-icons:nth-of-type(8) {
-		background-color: #96CDCD;
+/*i.material-icons:nth-of-type(8) {
+		background-color: #6e8d8d;
 }
 
 i.material-icons:nth-of-type(8):hover {
-		color: #96CDCD;
+		color: #6e8d8d;
 }
 
 i.material-icons:nth-of-type(8):after {
-		border-color: #96CDCD;
-}
+		border-color: #6e8d8d;
+}*/
 
 i.material-icons:nth-of-type(1) {
-		background-color: #96CDCD;
+		background-color: #6e8d8d;
 }
 
 i.material-icons:nth-of-type(1):hover {
-		color: #96CDCD;
+		color: #6e8d8d;
 }
 
 i.material-icons:nth-of-type(1):after {
-		border-color: #96CDCD;
+		border-color: #6e8d8d;
 }
 
 

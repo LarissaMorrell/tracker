@@ -1,5 +1,5 @@
 * {
-    font-size: 15px;
+    font-size: 17px;
     font-family: 'Roboto', 'Montserrat', sans-serif;
 }
 
@@ -29,12 +29,13 @@ body {
 
 .user-login,
 .new-account,
-.new-store {
+.new-store,
+.store-list {
     height: 100vh;
     width: 50%;
     max-width: 800px;
     float: right;
-    background: #becccc;
+    background: #a7bfbf; /* sage */
 }
 
 .user-login {
@@ -53,6 +54,7 @@ body {
     text-decoration: none;
     margin: 20px;
     display: block;
+    color: white;
 }
 
 
@@ -86,14 +88,9 @@ input[type=textarea] {
     height: 100px;
 }
 
-.details {
-    background-color: red;
-}
-
 button,
 input[type=submit] {
-    background-color: #008CBA;
-    /* blue */
+    background-color: #008CBA; /* blue */
     border: none;
     color: white;
     padding: 10px 28px;
@@ -131,32 +128,36 @@ input[type=submit]:hover {
 
 .store-result-box {
     position: relative;
-    background-color: rgb(245, 245, 245);
-    /* light gray */
-    border: 6px ridge rgb(220, 220, 220);
-    /* medium gray */
-    border-radius: 10px;
-    margin-bottom: 30px;
+    background-color: background: #a7bfbf; /* sage */
+ /*   margin-bottom: 30px;
     margin-left: auto;
-    margin-right: auto;
-    padding: 4px 100px 4px 25px;
+    margin-right: auto;*/
+    padding: 8px 100px 8px 25px;
     /* padding right for tier medal*/
-    height: 83px;
-    max-width: 550px;
+    min-height: 150px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.store-result-box:nth-child(odd) {
+    background-color: #6e8d8d; /* Darker green-gray */
 }
 
 .store-result-box h3 {
-    font-size: 20px;
+    font-size: 23px;
     margin-top: 10px;
     margin-bottom: 5px;
     max-width: 90%;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    font-family: 'Righteous', Arial, sans-serif;
+    color: white;
 }
 
 .store-result-box p {
     margin: 0px;
+    color: white;
 }
 
 .tier-round {
@@ -169,14 +170,9 @@ input[type=submit]:hover {
     width: 85px;
     height: 85px;
     border-radius: 50%;
-    border: 3px solid rgb(200, 200, 200);
-    /* medium gray */
-    background-color: rgb(245, 245, 245);
-    /* light gray */
+    border: 3px solid #a7bfbf; /* sage */
+    background-color: #6e8d8d; /* Darker green-gray */
 }
-
-
-/*.tier-medal img {*/
 
 img {
     margin-left: auto;
@@ -186,4 +182,8 @@ img {
     position: relative;
     top: 5px;
     left: 0px;
+}
+
+.details {
+    background-color: red;
 }

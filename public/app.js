@@ -244,7 +244,7 @@ function displayStores(state) {
     var stores = state.userStores;
 
     for (i in stores) {
-        var resultBoxDiv = $('<div>').addClass('store-result box box5 shadow5');
+        var resultBoxDiv = $('<div>').addClass('store-result-box');
         var tierRound = $('<div>').addClass('tier-round');
         tierRound.append(getTierMedal(state, i));
 
@@ -373,7 +373,7 @@ $(function() {
     });
 
     //click on a store result for more details
-    $(document).on('click', '.store-result box box5 shadow5', function(event) {
+    $(document).on('click', '.store-result-box', function(event) {
         $(this).addClass('details');
     });
 

@@ -4,26 +4,6 @@
 		font-family: "Roboto", Arial, sans-serif;
 }
 
-/*body {
-		font-size: 1rem;
-		background-color: #ebebeb;
-		padding: 20px;
-		text-align: center;
-}*/
-
-/*h1 {
-		font-weight: 100;
-		color: #777;
-}
-*/
-.main-wrapper {
-		border-radius: 4px;
-		background-color: white;
-		padding: 20px;
-		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-		position: relative;
-}
-
 i.material-icons {
 		font-size: 1.5rem;
 		text-align: center;
@@ -53,20 +33,6 @@ i.material-icons:hover:after {
 		transform: scale(1);
 		box-shadow: 10px 0 20px rgba(0, 0, 0, 0.19), 6px 0 6px rgba(0, 0, 0, 0.23);
 }
-
-
-
-/*i.material-icons:nth-of-type(8) {
-		background-color: #6e8d8d;
-}
-
-i.material-icons:nth-of-type(8):hover {
-		color: #6e8d8d;
-}
-
-i.material-icons:nth-of-type(8):after {
-		border-color: #6e8d8d;
-}*/
 
 i.material-icons:nth-of-type(1) {
 		background-color: #6e8d8d;

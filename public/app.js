@@ -296,7 +296,7 @@ function getAndDisplayStoreData() {
 
 //  on page load do this
 $(function() {
-    // $('.date-picker').val(new Date().toDateInputValue());
+    // $('.datePicker').val(new Date().toDateInputValue());
     // document.getElementById('paperwork-received').value = new Date().toDateInputValue();
     // document.getElementById('paperwork-received').valueAsDate = new Date();
 
@@ -366,9 +366,8 @@ $(function() {
     });
 
     //cancel creating a new account
-    $('#cxl-createaccount').on('click', function(event){
+    $('#cxl-create-account').on('click', function(event){
         event.preventDefault();
-
         window.location.href = '/index.html';
     });
 

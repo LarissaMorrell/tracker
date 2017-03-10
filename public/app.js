@@ -285,8 +285,8 @@ function getAndDisplayStoreData() {
 //  on page load do this
 $(function() {
     //give the redeemed calendar today's date on default
-    var today = new Date().toLocaleDateString('en-US');
-    document.getElementById('last-redeemed').defaultValue = today;
+    // var today = new Date().toLocaleDateString('en-US');
+    // document.getElementById('last-redeemed').defaultValue = today;
 
     //allow user to enter username/password
     $('#sign-in').on('click', function(event) {

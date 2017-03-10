@@ -65,7 +65,7 @@ function pad(num, size) {
 
 function generateStoreIds() {
     var store_ids = [];
-    let rand = getRand(10);
+    let rand = getRand(6);
     while (store_ids.length < rand) {
         store_ids.push(faker.random.number(99999999));
     }
@@ -75,7 +75,7 @@ function generateStoreIds() {
 
 function seedUserData() {
     var users = [];
-    let rand = getRand(15);
+    let rand = getRand(5);
     do {
         users.push(generateUser());
     } while (users.length < rand);
@@ -309,7 +309,7 @@ describe('Users API resource', function() {
 
 function generatePersonnel() {
     var personnel = [];
-    var rand = getRand(5);
+    var rand = getRand(3);
     
     while (personnel.length < rand) {
         personnel.push(generatePerson());

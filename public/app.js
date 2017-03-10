@@ -296,7 +296,13 @@ function getAndDisplayStoreData() {
 
 //  on page load do this
 $(function() {
-    // $('.datePicker').val(new Date().toDateInputValue());
+    // $('#last-redeemed').attr('placeholder', new Date().toLocaleDateString('en-US'));
+    var today = new Date().toLocaleDateString('en-US');
+
+    document.getElementById('last-redeemed').defaultValue = today;
+
+
+
     // document.getElementById('paperwork-received').value = new Date().toDateInputValue();
     // document.getElementById('paperwork-received').valueAsDate = new Date();
 

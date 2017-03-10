@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
 </head>
 
 <body>
@@ -101,19 +101,29 @@
                     <option value="silver">Silver</option>
                 </select>
                 <!-- Rounded switch -->
-                <label class="switch">Store wants paperwork returned
-                    <input type="checkbox" name="wants-paperwork">
-                    <div class="slider round"></div>
-                </label>
-                <label class="switch">Currently have paperwork
-                    <input type="checkbox" name="have-paperwork">
-                    <div class="slider round"></div>
-                </label>
+                <div>
+                    <label class="switch">Store wants paperwork returned
+                        <input type="checkbox" name="wants-paperwork">
+                        <div class="slider round"></div>
+                    </label>
+                    <label class="switch">Currently have paperwork
+                        <input type="checkbox" name="have-paperwork">
+                        <div class="slider round"></div>
+                    </label>
+                </div>
+                <!--                 <div class="switch">
+                        <input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" name="wants-paperwork">
+                        <label for="cmn-toggle-1">Store wants paperwork returned</label>
+                </div>
+                <div class="switch">
+                        <input id="cmn-toggle-2" class="cmn-toggle cmn-toggle-round" type="checkbox" name="have-paperwork">
+                        <label for="cmn-toggle-2">Currently have paperwork</label>
+                </div> -->
                 <label for="last-redeemed">Paperwork last redeemed: </label>
                 <input id="last-redeemed" class="date-picker" type="date" />
                 <div class="create-store-buttons">
                     <input type="submit">
-                    <button id="#cxl-create-store" class='cxl-button' type='button'>Cancel</button>
+                    <button id="cxl-create-store" class='cxl-button' type='button'>Cancel</button>
                 </div>
             </form>
         </div>

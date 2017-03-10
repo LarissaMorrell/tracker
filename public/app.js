@@ -355,6 +355,7 @@ $(function() {
 
     //cancel creating a new store
     $('#cxl-create-store').on('click', function(event) {
+        console.log("in cancel store");
         event.preventDefault();
 
         //hide creating a store

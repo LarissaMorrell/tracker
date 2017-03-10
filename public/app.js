@@ -30,11 +30,9 @@ function addUser(state) {
             "position": $("select[name*='position']").val(),
             "store_ids": [] //no stores when creating new account
         }
-
         //load all the data in newUser var and then post to API
         postAjax(state, '/user', 'index.html', newUser);
         $("#js-newAccount-form").after("<p>it worked!!!!!!!!</p>");
-
     } else {
         $("js-newAccount-form").append("<p>Your passwords do not match." +
             "Please try again. </p>");
@@ -55,11 +53,8 @@ function addStore(state) {
         "lastRedeemed": $("#last-redeemed").val(),
         "personnel": []
     }
-
     //create a new store in the store database
     postAjax(state, '/store', null, newStore);
-
-
 }
 
 
@@ -83,7 +78,6 @@ function postAjax(state, endpoint, page, dataObj) {
 
                 //update the user database with the new store id
                 putAjax(state, '/user/' + state.user.id, null, { 'store_ids': state.user.store_ids, 'id': state.user.id });
-
                 displayStores(state);
             }
         }
@@ -117,22 +111,16 @@ function getAjax(state, endpoint, page, dataObj = null) { //makes dataObj option
                     getAndDisplayStoreData();
                 }
             }
-
-
-
             var endArr = endpoint.split('/'); //[0] will be empty string
 
             //if the endpoint starts with 'store' and suceeded by a string (id)
             if (endArr[1] == 'store' && endArr.length == 3) {
                 state.userStores.push(data);
-
                 //if the last store has been loaded into userStores[]
                 if (state.userStores.length == state.user.store_ids.length) {
-
                     displayStores(state);
                 }
             }
-
         }
     }
     if (dataObj != null) {
@@ -296,15 +284,9 @@ function getAndDisplayStoreData() {
 
 //  on page load do this
 $(function() {
-    // $('#last-redeemed').attr('placeholder', new Date().toLocaleDateString('en-US'));
+    //give the redeemed calendar today's date on default
     var today = new Date().toLocaleDateString('en-US');
-
     document.getElementById('last-redeemed').defaultValue = today;
-
-
-
-    // document.getElementById('paperwork-received').value = new Date().toDateInputValue();
-    // document.getElementById('paperwork-received').valueAsDate = new Date();
 
     //allow user to enter username/password
     $('#sign-in').on('click', function(event) {

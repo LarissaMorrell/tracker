@@ -26,7 +26,6 @@ body {
 
 
 /* Contains the form that enables user to log in */
-
 .user-login,
 .new-account,
 .new-store,
@@ -106,7 +105,6 @@ input[type=submit] {
     display: inline-block;
     border-radius: 14px;
     font-size: 16px;
-/*    display: inline-block;*/
 }
 
 select,
@@ -119,7 +117,6 @@ input[type=date] {
     font-size: 16px;
     height: 34px;
     width: 65%;
-    /*background: url(/down-arrow.jpg) no-repeat right center;*/
 }
 
 button {

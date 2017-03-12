@@ -309,7 +309,7 @@ describe('Users API resource', function() {
 
 function generatePersonnel() {
     var personnel = [];
-    var rand = getRand(3);
+    var rand = getRand(4);
     
     while (personnel.length < rand) {
         personnel.push(generatePerson());
@@ -327,7 +327,7 @@ function generatePerson() {
 
 function seedStoreData() {
     const stores = [];
-    const rand = getRand(5);
+    const rand = getRand(8);
 
     while (stores.length < rand) {
         stores.push(generateStore());

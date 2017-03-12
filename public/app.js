@@ -228,7 +228,8 @@ function getDateString(dateStr) {
 
 function displayStores(state) {
 
-    $('.store-list').empty();
+    // $('.store-list').not('#store-list-heading').empty();
+    $('#store-list-heading').nextAll().remove();
     var stores = state.userStores;
 
     for (i in stores) {

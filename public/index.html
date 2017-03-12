@@ -20,8 +20,9 @@
     <div class="user-login">
         <img src="shopping-cart.png">
         <h1>MrktTracker</h1>
-        <a class="landing-option" href="/create-account.html">Create Account</a>
-        <a id="sign-in" class="landing-option" href="#0">Sign In</a>
+        <h2>Helping your Field Representatives increase performance</h2>
+        <a href="/create-account.html">Create Account</a>
+        <a id="sign-in" href="#0">Sign In</a>
         <form id='js-login-form' class='hide'>
             <input type="email" name="user-email" placeholder="Email" required>
             <input type="password" name="user-password" placeholder="Password" required>
@@ -31,7 +32,7 @@
     <i id="add-store-button" class="hide">add</i>
     <section class="create-store hide">
         <div class='new-store'>
-            <h2>Create a Store</h2>
+            <h3>Create a Store</h3>
             <form id='js-newStore-form'>
                 <input placeholder="Store Name" type="text" name="store-name" required>
                 <input placeholder="Store ID" type="text" name="store-id">
@@ -111,14 +112,16 @@
                 </div>
                 <label for="last-redeemed">Paperwork last redeemed: </label>
                 <input id="last-redeemed" class="date-picker" type="date" />
-                <div class="create-store-buttons">
+                <div class"create-store-buttons">
                     <input type="submit">
                     <button id="cxl-create-store" class='cxl-button' type='button'>Cancel</button>
                 </div>
             </form>
         </div>
     </section>
-    <section class="store-list hide"></section>
+    <section class="store-list hide">
+        <h3 id="store-list-heading">Your store rankings:</h3>
+    </section>
 <!-- link to jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <!-- link to app.js -->
